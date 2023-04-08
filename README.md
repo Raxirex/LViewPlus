@@ -1,7 +1,6 @@
 # 🔥 WinStealer
 
-<img src="https://flat.badgen.net/badge/RIOT/Undetected./green?icon=terminal">  
-<img src="https://flat.badgen.net/badge/RIOT/BANS: 0/red?icon=terminal">
+<img src="https://flat.badgen.net/badge/RIOT/Undetected./green?icon=terminal">  <img src="https://flat.badgen.net/badge/RIOT/BANS: 0/red?icon=terminal">
 
 ## How can i use Formatter?
 
