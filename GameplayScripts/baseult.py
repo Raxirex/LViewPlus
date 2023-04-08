@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.skills import *
 from commons.items import *
 from commons.utils import *
@@ -152,22 +152,22 @@ supportedChampions = {
 
 enemyBasePos = None
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "WS+ Baseult",
     "author": "bckd00r",
     "description": "Not very good...",
 }
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     pass
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     pass
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global supportedChampions
     if game.player.name.capitalize() not in supportedChampions:
         ui.text(
@@ -230,7 +230,7 @@ def calcTravelTimeToBase(game, unit, spell):
 lastR = 0
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global lastR, supportedChampions
     if game.player.name.capitalize() not in supportedChampions:
         return

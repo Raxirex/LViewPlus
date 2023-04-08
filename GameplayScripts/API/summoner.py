@@ -6,6 +6,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 atk_speed = 0
 
+
 def GetAttackSpeed() -> float:
     global atk_speed
     player = urllib.request.urlopen(

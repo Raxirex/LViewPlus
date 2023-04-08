@@ -149,21 +149,17 @@ def IsDanger(game, point) -> bool:
         spell = get_missile_parent_spell(missile.name)
         if not spell:
             continue
-        if (
-            game.point_on_line(
-                game.world_to_screen(missile.start_pos),
-                game.world_to_screen(missile.end_pos),
-                game.world_to_screen(point),
-                game.player.gameplay_radius * 1,
-            )
-            and game.is_point_on_screen(missile.pos)
-        ):
+        if game.point_on_line(
+            game.world_to_screen(missile.start_pos),
+            game.world_to_screen(missile.end_pos),
+            game.world_to_screen(point),
+            game.player.gameplay_radius * 1,
+        ) and game.is_point_on_screen(missile.pos):
             val = True
     return val
 
 
 def draw_rect(game, start_pos, end_pos, radius, color):
-
     dir = Vec3(end_pos.x - start_pos.x, 0, end_pos.z - start_pos.z).normalize()
 
     left_dir = Vec3(dir.x, dir.y, dir.z).rotate_y(90).scale(radius)

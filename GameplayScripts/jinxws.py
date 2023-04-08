@@ -304,7 +304,6 @@ def winstealer_update(game, ui):
     self = game.player
 
     if self.is_alive and game.is_point_on_screen(self.pos) and not game.isChatOpen:
-
         if game.is_key_down(combo_key):
             Combo(game)
         if game.is_key_down(laneclear_key):

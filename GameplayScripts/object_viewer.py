@@ -1,7 +1,7 @@
-from winstealer import *
+from LViewPlus64 import *
 from pprint import pprint
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "Object Tracker",
     "author": "LView team + bckd00r",
     "description": "object tracker",
@@ -9,7 +9,6 @@ winstealer_script_info = {
 
 
 def draw_spell(spell, ui):
-
     if ui.treenode(str(spell.slot)):
         ui.labeltext("name", spell.name)
         ui.labeltext("missileName", spell.missileName)
@@ -33,7 +32,6 @@ def draw_spell(spell, ui):
 def draw_items(items, ui):
     for item in items:
         if ui.treenode(str(item.id)):
-
             ui.dragint("slot", item.slot)
             if item.movement_speed > 0:
                 ui.dragfloat("movement_speed", item.movement_speed)
@@ -111,7 +109,6 @@ def draw_missile(obj, ui):
 
 
 def draw_game_object(obj, ui, additional_draw=None, set_open=False):
-
     if obj == None:
         ui.text("null", Color.RED)
         return
@@ -209,20 +206,19 @@ def draw_list(label, objs, ui, draw_func):
         ui.treepop()
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     pass
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     pass
 
 
-def winstealer_draw_settings(objs, ui):
+def LViewPlus64_draw_settings(objs, ui):
     pass
 
 
-def winstealer_update(game, ui):
-
+def LViewPlus64_update(game, ui):
     ui.begin("Object Viewer")
 
     ui.dragfloat("time", game.time)

@@ -56,7 +56,6 @@ def draw_champ_world_icon(
     draw_hp_bar=False,
     draw_invisible_duration=False,
 ):
-
     ColorGray = Color.GRAY
     ColorGray.a = 5.0
     ColorGreen = Color.GREEN

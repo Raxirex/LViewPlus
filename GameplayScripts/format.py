@@ -1,5 +1,6 @@
 import subprocess
 
+
 def winstealer_load_cfg(cfg):
     pass
 
@@ -14,6 +15,7 @@ def winstealer_draw_settings(objs, ui):
 
 def winstealer_update(game, ui):
     pass
+
 
 def format():
     print("🎀 Formatting files")

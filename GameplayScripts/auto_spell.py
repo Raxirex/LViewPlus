@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.utils import *
 from commons.skills import *
 from commons.items import *
@@ -7,7 +7,7 @@ from evade import checkEvade
 import json, time
 from pprint import pprint
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "Aim",
     "author": "bckd00r",
     "description": "Aim helper",
@@ -15,23 +15,24 @@ winstealer_script_info = {
 
 cast_keys = {"Q": 0, "W": 0, "E": 0, "R": 0}
 
-def winstealer_load_cfg(cfg):
+
+def LViewPlus64_load_cfg(cfg):
     global cast_keys
     cast_keys = json.loads(cfg.get_str("cast_keys", json.dumps(cast_keys)))
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global cast_keys
     cfg.set_str("cast_keys", json.dumps(cast_keys))
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global cast_keys
     for slot, key in cast_keys.items():
         cast_keys[slot] = ui.keyselect(f"Key to cast {slot}", key)
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global cast_keys
 
     if game.player.is_alive and game.player.is_visible and not game.isChatOpen:

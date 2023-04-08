@@ -166,7 +166,7 @@ ChampionSpells = {
     ],
     "pyke": [
         Spell("pykeqrange", ["pykeqrange", "pykeq"], SFlag.Line),
-        Spell("pykee", ["pykeemissile"], SFlag.Line)
+        Spell("pykee", ["pykeemissile"], SFlag.Line),
     ],
     "amumu": [
         Spell(
@@ -363,7 +363,11 @@ ChampionSpells = {
     "lucian": [
         Spell("lucianq", ["lucianqmis"], SFlag.SkillshotLine, 0.4, DangerLevels.Fastes),
         Spell("lucianw", ["lucianwmissile"], SFlag.SkillshotLine),
-        Spell("lucianrmis", ["lucianrmissile", "lucianrmissileoffhand"], SFlag.SkillshotLine),
+        Spell(
+            "lucianrmis",
+            ["lucianrmissile", "lucianrmissileoffhand"],
+            SFlag.SkillshotLine,
+        ),
     ],
     "gragas": [
         Spell("gragasq", ["gragasqmissile"], SFlag.Area),
@@ -401,7 +405,7 @@ ChampionSpells = {
     "tryndamere": [Spell("slashcast", ["slashcast"], SFlag.SkillshotLine)],
     "twitch": [
         Spell("twitchvenomcask", ["twitchvenomcaskmissile"], SFlag.Area),
-        Spell("twitchsprayandprayattack", ["twitchsprayandprayattack"], SFlag.Line)
+        Spell("twitchsprayandprayattack", ["twitchsprayandprayattack"], SFlag.Line),
     ],
     "nocturne": [Spell("nocturneduskbringer", ["nocturneduskbringer"], SFlag.Line)],
     "velkoz": [
@@ -579,7 +583,7 @@ ChampionSpells = {
     "fiora": [Spell("fioraw", ["fiorawmissile"], SFlag.SkillshotLine)],
     "sivir": [
         Spell("sivirq", ["sivirqmissile"], SFlag.SkillshotLine),
-        Spell("sivirqreturn", ["sivirqmissilereturn"], SFlag.SkillshotLine)
+        Spell("sivirqreturn", ["sivirqmissilereturn"], SFlag.SkillshotLine),
     ],
     "kaisa": [Spell("kaisaw", ["kaisaw"], SFlag.Line | SFlag.CollideWindwall)],
     "karma": [
@@ -633,7 +637,7 @@ ChampionSpells = {
             "xayahr",
             ["xayahrmissile"],
             SFlag.Line,
-        )
+        ),
     ],
     "sona": [Spell("sonar", ["sonar"], SFlag.Line | SFlag.CollideWindwall)],
     "akali": [Spell("akalie", ["akaliemis"], SFlag.Line | SFlag.CollideWindwall)],
@@ -755,7 +759,15 @@ ChampionSpells = {
         Spell("azirsoldier", ["azirsoldiermissile"], SFlag.Line),
     ],
     "riven": [
-        Spell("rivenizunablade", ["rivenwindslashmissileleft", "rivenwindslashmissileright", "rivenwindslashmissilecenter"], SFlag.Line),
+        Spell(
+            "rivenizunablade",
+            [
+                "rivenwindslashmissileleft",
+                "rivenwindslashmissileright",
+                "rivenwindslashmissilecenter",
+            ],
+            SFlag.Line,
+        ),
     ],
     "yuumi": [
         Spell("yuumiq", ["yuumiqskillshot"], SFlag.Line),
@@ -829,6 +841,7 @@ def is_skillshot_cone(skill_name):
         return False
     return Spells[skill_name].flags & SFlag.Cone
 
+
 def is_last_hitable(game, player, enemy):
     missile_speed = player.basic_missile_speed + 1
 
@@ -842,9 +855,7 @@ def is_last_hitable(game, player, enemy):
     )
 
     hp = enemy.health + enemy.armour + (enemy.health_regen)
-    t_until_basic_hits = (
-        game.distance(player, enemy) / missile_speed
-    )
+    t_until_basic_hits = game.distance(player, enemy) / missile_speed
 
     for missile in game.missiles:
         if missile.dest_id == enemy.id:
@@ -894,7 +905,6 @@ def castpoint_for_collision(game, spell, caster, target):
         target_dir.z = 0.0
 
     if spell_extra.flags & SFlag.Line:
-
         iterations = int(missile.cast_range / 30.0)
         step = t_missile / iterations
 
@@ -1013,7 +1023,10 @@ def InSkillShot(game, pos, missile, spell, radius):
         missile.start_pos, missile.end_pos, pos
     )
     if spell.flags & SFlag.Line or spell.flags & SFlag.SkillshotLine:
-        return isOnSegment and pointSegment.distance(pos) <= game.player.gameplay_radius * 2
+        return (
+            isOnSegment
+            and pointSegment.distance(pos) <= game.player.gameplay_radius * 2
+        )
     if spell.flags & SFlag.Area:
         return game.point_on_line(
             game.world_to_screen(missile.start_pos),

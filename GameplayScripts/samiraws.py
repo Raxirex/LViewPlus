@@ -241,15 +241,12 @@ def Evade(game):
         spell = get_missile_parent_spell(missile.name)
         if not spell:
             continue
-        if (
-            game.point_on_line(
-                game.world_to_screen(start_pos),
-                game.world_to_screen(end_pos),
-                game.world_to_screen(game.player.pos),
-                br,
-            )
-            and game.is_point_on_screen(curr_pos)
-        ):
+        if game.point_on_line(
+            game.world_to_screen(start_pos),
+            game.world_to_screen(end_pos),
+            game.world_to_screen(game.player.pos),
+            br,
+        ) and game.is_point_on_screen(curr_pos):
             if IsReady(game, e_spell) and use_e_on_evade:
                 minion = GetBestMinionsInRange(game, e["Range"])
                 if minion and not IsDanger(game, minion.pos):
@@ -279,7 +276,6 @@ def winstealer_update(game, ui):
     self = game.player
 
     if self.is_alive and not game.isChatOpen:
-
         if draw_q_range:
             # game.draw_circle_world(game.player.pos, q["Range"], 100, 1, Color.WHITE)
             game.draw_circle_world(game.player.pos, q["MinRange"], 100, 1, Color.WHITE)

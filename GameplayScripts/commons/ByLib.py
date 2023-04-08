@@ -114712,7 +114712,6 @@ def mesafe(bir, iki):
 
 
 def SRinWall(game, position):
-
     global bySRWalls
 
     try:
@@ -114729,7 +114728,6 @@ def SRinWall(game, position):
 
 
 def SRinBush(game, position):
-
     global bySRBushes
 
     try:
@@ -114746,7 +114744,6 @@ def SRinBush(game, position):
 
 
 def SRinRiver(game, position):
-
     global bySRRiver
 
     try:
@@ -114763,7 +114760,6 @@ def SRinRiver(game, position):
 
 
 def HAinBushes(game, position):
-
     global byHABushes
 
     try:
@@ -114780,7 +114776,6 @@ def HAinBushes(game, position):
 
 
 def HAinWall(game, position):
-
     global byHABushes
 
     try:

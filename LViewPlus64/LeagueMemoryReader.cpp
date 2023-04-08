@@ -184,12 +184,12 @@ void LeagueMemoryReader::ReadObjects(MemSnapshot& ms) {
 		if (obj->isVisible) {
 			obj->lastVisibleAt = ms.gameTime;
 		}
- 
+		std::cout << obj->name << std::endl;
 		if (obj->networkId != 0) {
 			ms.indexToNetId[obj->objectIndex] = obj->networkId;
 			ms.updatedThisFrame.insert(obj->networkId);
  
-			if ((obj->name.size() <= 2 && obj->name != "vi") || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
+			if (obj->name.size() <= 2 || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
 				blacklistedObjects.insert(obj->networkId);
 			else if (obj->HasUnitTags(Unit_Champion) && obj->level > 0)
 				ms.champions.push_back(obj);

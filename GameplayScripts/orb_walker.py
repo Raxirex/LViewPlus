@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from evade import checkEvade
 from commons.items import *
 from commons.skills import *
@@ -8,7 +8,7 @@ from commons.timer import Timer
 import time, json, random
 from API.summoner import *
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "WS+ Orbwalker",
     "author": "bckd00r",
     "description": "Best kite machine ever!",
@@ -28,7 +28,7 @@ click_speed = 0
 kite_ping = 0
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global key_orbwalk, lasthit_key, harass_key, laneclear_key
     global randomize_movement
     global click_speed, kite_ping
@@ -45,7 +45,7 @@ def winstealer_load_cfg(cfg):
     kite_ping = cfg.get_int("kite_ping", 20)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global key_orbwalk, harass_key, lasthit_key, laneclear_key
     global randomize_movement
     global click_speed, kite_ping
@@ -62,7 +62,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_float("kite_ping", kite_ping)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global key_orbwalk, harass_key, lasthit_key, laneclear_key
     global randomize_movement
     global click_speed, kite_ping
@@ -112,7 +112,7 @@ last = 0
 atk_speed = 0
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global key_orbwalk, lasthit_key, laneclear_key
     global randomize_movement
     global click_speed, kite_ping

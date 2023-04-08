@@ -19,7 +19,6 @@ def get_color_for_cooldown(cooldown):
 
 
 def draw_spell(game, spell, pos, size, show_lvl=True, show_cd=True):
-
     cooldown = spell.get_current_cooldown(game.time)
     color = get_color_for_cooldown(cooldown) if spell.level > 0 else Color.GRAY
 
@@ -29,7 +28,6 @@ def draw_spell(game, spell, pos, size, show_lvl=True, show_cd=True):
 
 
 def draw_overlay_on_champ(game, champ):
-
     p = game.hp_bar_pos(champ)
     p.x -= 70
     if not game.is_point_on_screen(p):

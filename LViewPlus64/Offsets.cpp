@@ -10,11 +10,11 @@ int Offsets::ObjMissileName                  = 0x6C;
 int Offsets::ObjNetworkID                    = 0xC8; //
 int Offsets::ObjPos                          = 0x220; //
 int Offsets::ObjMissileSpellCast             = 0x250;
-int Offsets::ObjVisibility                   = 0x270;
+int Offsets::ObjVisibility                   = 0x310; //
 int Offsets::ObjSpawnCount                   = 0x328; //
 int Offsets::ObjSrcIndex                     = 0x290;
 int Offsets::ObjMana                         = 0x340; //
-int Offsets::ObjMaxMana						 = 0x2A8;
+int Offsets::ObjMaxMana						 = 0x358; //
 int Offsets::ObjRecallState                  = 0xD8C;
 int Offsets::ObjHealth                       = 0x1058; //
 int Offsets::ObjMaxHealth                    = 0x1070; //
@@ -50,8 +50,8 @@ int Offsets::ObjAdditionalApMulti			 = 0x122C;
 int Offsets::ObjManaRegen					 = 0x1134;
 int Offsets::ObjHealthRegen					 = 0x1690; //
 
-int Offsets::Chat							 = 0x2F9B128;
-int Offsets::ChatIsOpen						 = 0x678;
+int Offsets::Chat							 = 0x518ECB8; //
+int Offsets::ChatIsOpen						 = 0xC90; //
 
 int Offsets::SpellBookActiveSpellCast = 0x20;
 int Offsets::SpellBookSpellSlots = 0x478;

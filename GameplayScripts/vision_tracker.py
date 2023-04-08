@@ -153,7 +153,6 @@ def winstealer_draw_settings(game, ui):
 
 
 def draw(game, obj, radius, show_circle_world, show_circle_map, icon):
-
     sp = game.world_to_screen(obj.pos)
 
     if game.is_point_on_screen(sp):
@@ -213,7 +212,6 @@ def wardAwareness(game):
 
 
 def winstealer_update(game, ui):
-
     global show_clones, show_wards, show_traps
     global traps, wards, clones
 
