@@ -46,7 +46,7 @@ void Spell::Trigger(bool charge) {
 	}
 }
 
-void Spell::LoadFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
+void Spell::LoadFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad) {
 
 	addressSlot = base;
 	Mem::Read(hProcess, base, buffer, 0x150);
@@ -56,12 +56,12 @@ void Spell::LoadFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
 	memcpy(&value, buffer + Offsets::SpellSlotDamage, sizeof(float));
 	memcpy(&timeCharge, buffer + Offsets::SpellSlotSmiteCharges, sizeof(int));
 
-	DWORD spellInfoPtr;
+	DWORD64 spellInfoPtr;
 	memcpy(&spellInfoPtr, buffer + Offsets::SpellSlotSpellInfo, sizeof(DWORD));
 	
-	DWORD spellDataPtr = Mem::ReadDWORD(hProcess, spellInfoPtr + Offsets::SpellInfoSpellData);
-	DWORD spellNamePtr = Mem::ReadDWORD(hProcess, spellDataPtr + Offsets::SpellDataSpellName);
-	DWORD spellMissileNamePtr = Mem::ReadDWORD(hProcess, spellDataPtr + Offsets::SpellDataMissileName);
+	DWORD64 spellDataPtr = Mem::ReadDWORD(hProcess, spellInfoPtr + Offsets::SpellInfoSpellData);
+	DWORD64 spellNamePtr = Mem::ReadDWORD(hProcess, spellDataPtr + Offsets::SpellDataSpellName);
+	DWORD64 spellMissileNamePtr = Mem::ReadDWORD(hProcess, spellDataPtr + Offsets::SpellDataMissileName);
 
 	char buff[50];
 	Mem::Read(hProcess, spellNamePtr, buff, 50);

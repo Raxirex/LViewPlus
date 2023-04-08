@@ -2,45 +2,45 @@
 
 Offsets::Offsets() {};
 
-int Offsets::GameTime						 = 0x02fa0294;
+int Offsets::GameTime						 = 0x5181C28; // 15.7 F3 0F 5C 35 ?? ?? ?? ?? 0F 28 F8
 
-int Offsets::ObjIndex                        = 0x20;
-int Offsets::ObjTeam                         = 0x4C;
+int Offsets::ObjIndex                        = 0x10; //
+int Offsets::ObjTeam                         = 0x3C; //
 int Offsets::ObjMissileName                  = 0x6C;
-int Offsets::ObjNetworkID                    = 0xCC;
-int Offsets::ObjPos                          = 0x1d8;
+int Offsets::ObjNetworkID                    = 0xC8; //
+int Offsets::ObjPos                          = 0x220; //
 int Offsets::ObjMissileSpellCast             = 0x250;
 int Offsets::ObjVisibility                   = 0x270;
-int Offsets::ObjSpawnCount                   = 0x218;
+int Offsets::ObjSpawnCount                   = 0x328; //
 int Offsets::ObjSrcIndex                     = 0x290;
-int Offsets::ObjMana                         = 0x298;
+int Offsets::ObjMana                         = 0x340; //
 int Offsets::ObjMaxMana						 = 0x2A8;
 int Offsets::ObjRecallState                  = 0xD8C;
-int Offsets::ObjHealth                       = 0xD98;
-int Offsets::ObjMaxHealth                    = 0xDA8;
-int Offsets::ObjAbilityHaste				 = 0x10F4;
-int Offsets::ObjLethality					 = 0x11DC;
-int Offsets::ObjArmor                        = 0x12C4;
-int Offsets::ObjBonusArmor					 = 0x12C8;
-int Offsets::ObjMagicRes                     = 0x12D0;
-int Offsets::ObjBonusMagicRes				 = 0x12D0;
-int Offsets::ObjBaseAtk                      = 0x12A0;
-int Offsets::ObjBonusAtk                     = 0x1218;
-int Offsets::ObjMoveSpeed                    = 0x12E0;
+int Offsets::ObjHealth                       = 0x1058; //
+int Offsets::ObjMaxHealth                    = 0x1070; //
+int Offsets::ObjAbilityHaste				 = 0x1480; //
+int Offsets::ObjLethality					 = 0x1580; //
+int Offsets::ObjArmor                        = 0x167C; //
+int Offsets::ObjBonusArmor					 = 0x1680; //
+int Offsets::ObjMagicRes                     = 0x1684; //
+int Offsets::ObjBonusMagicRes				 = 0x1688; //
+int Offsets::ObjBaseAtk                      = 0x1654; // 
+int Offsets::ObjBonusAtk                     = 0x15C0; //
+int Offsets::ObjMoveSpeed                    = 0x1694; //
 int Offsets::ObjSpellBook                    = 0x2408;
 int Offsets::ObjTransformation               = 0x3040;
-int Offsets::ObjName                         = 0x2C6C;
-int Offsets::ObjLvl                          = 0x33DC;
+int Offsets::ObjName                         = 0x38A0; //
+int Offsets::ObjLvl                          = 0x4030; //
 int Offsets::ObjExpiry                       = 0x298; 
-int Offsets::ObjCrit                         = 0x12C4;
-int Offsets::ObjCritMulti                    = 0x12B4;
-int Offsets::ObjAbilityPower                 = 0x1228;
-int Offsets::ObjAtkSpeedMulti                = 0x129C;
-int Offsets::ObjAtkRange                     = 0x12E8;
+int Offsets::ObjCrit                         = 0x1B70; //
+int Offsets::ObjCritMulti                    = 0x1B58; //
+int Offsets::ObjAbilityPower                 = 0x15D0; //
+int Offsets::ObjAtkSpeedMulti                = 0x1650; //
+int Offsets::ObjAtkRange                     = 0x169C; //
 int Offsets::ObjTargetable					 = 0xD00;
-int Offsets::ObjInvulnerable				 = 0x3D0;
+int Offsets::ObjInvulnerable				 = 0x4F0; //
 int Offsets::ObjIsMoving					 = 0x3638;
-int Offsets::ObjDirection					 = 0x1B88;
+int Offsets::ObjDirection					 = 0x3EB4; //
 int Offsets::ObjItemList					 = 0x3430;
 
 int Offsets::ObjExpierience					 = 0x33CC;
@@ -48,10 +48,7 @@ int Offsets::ObjMagicPen					 = 0x11C0;
 int Offsets::ObjMagicPenMulti				 = 0x11C8;
 int Offsets::ObjAdditionalApMulti			 = 0x122C; 
 int Offsets::ObjManaRegen					 = 0x1134;
-int Offsets::ObjHealthRegen					 = 0x12D8;
-
-int Offsets::ZoomClass = 0x02fadb28;
-int Offsets::MaxZoom = 0x20;
+int Offsets::ObjHealthRegen					 = 0x1690; //
 
 int Offsets::Chat							 = 0x2F9B128;
 int Offsets::ChatIsOpen						 = 0x678;
@@ -83,8 +80,8 @@ int Offsets::IsMoving = 0x198;
 int Offsets::NavBegin = 0x1BC;
 int Offsets::NavEnd = 0x1C0;
 
-int Offsets::ViewProjMatrices = 0x2FCBAA0;
-int Offsets::Renderer = 0x02fce914;
+int Offsets::ViewProjMatrices = 0x51CBCA0; // 15.7 48 8D 0D ? ? ? ? 0F 10 00 
+int Offsets::Renderer = 0x51d4028; // 15.7 48 8B 0D ? ? ? ? 4C 8D 45 87 48 8B D0
 int Offsets::RendererWidth = 0xC;
 int Offsets::RendererHeight = 0x10;
 
@@ -100,14 +97,14 @@ int Offsets::SpellDataMissileName = 0x6C;
 int Offsets::SpellSlotSmiteTimer = 0x64;
 int Offsets::SpellSlotSmiteCharges = 0x58;
 
-int Offsets::ObjectManager = 0x0170bbb8;
-int Offsets::LocalPlayer = 0x02fa7fe0;
-int Offsets::UnderMouseObject = 0x02fa89f8;
+int Offsets::ObjectManager = 0x20D5978; // 15.7 [actual address in first opcode] 89 57 10 48 8B 0D ? ? ? ?
+int Offsets::LocalPlayer = 0x518EB00; // 15.7 48 8B 3D ?? ?? ?? ?? 48 3B CF
+int Offsets::UnderMouseObject = 0x3930408; // 15.7 48 89 0D ? ? ? ? 48 8D 05 ? ? ? ? 48 89 01 33 D2
 
-int Offsets::ObjectMapCount               = 0x2C;
-int Offsets::ObjectMapRoot                = 0x28;
-int Offsets::ObjectMapNodeNetId           = 0x10;
-int Offsets::ObjectMapNodeObject          = 0x14;
+int Offsets::ObjectMapCount               = 0x48; //
+int Offsets::ObjectMapRoot                = 0x40; //
+int Offsets::ObjectMapNodeNetId           = 0x20; //
+int Offsets::ObjectMapNodeObject          = 0x28; //
 
 // int Offsets::MissileSpellInfo             = 0x230;
 // int Offsets::MissileSrcIdx                = 0x290;

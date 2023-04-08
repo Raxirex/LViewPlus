@@ -46,6 +46,7 @@ struct MemSnapshot {
 	Vector2                                       minimapPos;
 	Vector2                                       minimapSize;
 									             
-	/* Memory reading benchmarks */	             
+	/* Memory reading benchmarks */
+	std::unique_ptr<ReadBenchmark>                benchmark = std::unique_ptr<ReadBenchmark>(new ReadBenchmark());
 
 };

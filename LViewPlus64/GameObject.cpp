@@ -90,7 +90,7 @@ bool GameObject::IsAllyTo(const GameObject& other) const {
 	return this->team == other.team;
 }
 
-void GameObject::LoadFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
+void GameObject::LoadFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad) {
 
 	address = base;
 	Mem::Read(hProcess, base, buff, sizeBuff);
@@ -135,18 +135,31 @@ void GameObject::LoadFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
 	*/
 
 	// Check if alive
-	DWORD spawnCount;
+	DWORD64 spawnCount;
 	memcpy(&spawnCount, &buff[Offsets::ObjSpawnCount], sizeof(int));
 	isAlive = (spawnCount % 2 == 0);
 
 	if (deepLoad) {
+
 		char nameBuff[50];
 		Mem::Read(hProcess, Mem::ReadDWORDFromBuffer(buff, Offsets::ObjName), nameBuff, 50);
 
+		name = std::string("");
 		if (Character::ContainsOnlyASCII(nameBuff, 50))
 			name = Character::ToLower(std::string(nameBuff));
 		else
 			name = std::string("");
+
+		if (name == "") {
+			char nameBuff2[50];
+			Mem::Read(hProcess, address + Offsets::ObjName, nameBuff2, 50);
+
+			if (Character::ContainsOnlyASCII(nameBuff2, 50))
+				name = Character::ToLower(std::string(nameBuff2));
+			else
+				name = std::string("");
+		}
+
 		unitInfo = GameData::GetUnitInfoByName(name);
 	}
 	// Don't use buffmanager for minions making lag idk ?
@@ -165,10 +178,10 @@ void GameObject::LoadFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
 		}*/
 }
 
-DWORD GameObject::spellSlotPointerBuffer[7] = {};
+DWORD64 GameObject::spellSlotPointerBuffer[7] = {};
 BYTE  GameObject::itemListBuffer[0x100] = {};
 
-void GameObject::LoadChampionFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
+void GameObject::LoadChampionFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad) {
 
 	memcpy(&spellSlotPointerBuffer, &buff[Offsets::ObjSpellBook], sizeof(DWORD) * 6);
 
@@ -180,14 +193,14 @@ void GameObject::LoadChampionFromMem(DWORD base, HANDLE hProcess, bool deepLoad)
 	D.LoadFromMem(spellSlotPointerBuffer[4], hProcess);
 	F.LoadFromMem(spellSlotPointerBuffer[5], hProcess);
 
-	DWORD ptrList = Mem::ReadDWORD(hProcess, address + Offsets::ObjItemList);
+	DWORD64 ptrList = Mem::ReadDWORD(hProcess, address + Offsets::ObjItemList);
 	Mem::Read(hProcess, ptrList, itemListBuffer, 0x100);
 
 	for (int i = 0; i < 7; ++i) {
 		itemSlots[i].isEmpty = true;
 		itemSlots[i].slot = i;
 
-		DWORD itemPtr = 0, itemInfoPtr = 0;
+		DWORD64 itemPtr = 0, itemInfoPtr = 0;
 		memcpy(&itemPtr, itemListBuffer + i * 0x10 + Offsets::ItemListItem, sizeof(DWORD));
 		if (itemPtr == 0)
 			continue;
@@ -204,20 +217,20 @@ void GameObject::LoadChampionFromMem(DWORD base, HANDLE hProcess, bool deepLoad)
 	level = Mem::ReadDWORD(hProcess, base + Offsets::ObjLvl);
 }
 
-void GameObject::LoadBuffFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
-	DWORD buffArrayBgn = Mem::ReadDWORD(hProcess, address + Offsets::ObjBuffManager + Offsets::BuffManagerEntriesArray);
-	DWORD buffArrayEnd = Mem::ReadDWORD(hProcess, address + Offsets::ObjBuffManager + 0x14);
+void GameObject::LoadBuffFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad) {
+	DWORD64 buffArrayBgn = Mem::ReadDWORD(hProcess, address + Offsets::ObjBuffManager + Offsets::BuffManagerEntriesArray);
+	DWORD64 buffArrayEnd = Mem::ReadDWORD(hProcess, address + Offsets::ObjBuffManager + 0x14);
 	int i = 0;
 	buffVector.clear();
 	buffVector.reserve(i);
-	for (DWORD pBuffPtr = buffArrayBgn; pBuffPtr != buffArrayEnd; pBuffPtr += 0x8)
+	for (DWORD64 pBuffPtr = buffArrayBgn; pBuffPtr != buffArrayEnd; pBuffPtr += 0x8)
 	{
 		i++;
-		DWORD buffInstance = Mem::ReadDWORD(hProcess, pBuffPtr);
+		DWORD64 buffInstance = Mem::ReadDWORD(hProcess, pBuffPtr);
 
 		Mem::Read(hProcess, buffInstance, buff, sizeBuff);
 
-		DWORD buffInfo = Mem::ReadDWORDFromBuffer(buff, 0x8);
+		DWORD64 buffInfo = Mem::ReadDWORDFromBuffer(buff, 0x8);
 
 		if (buffInfo == NULL || (DWORD)buffInfo <= 0x1000)
 			continue;
@@ -286,16 +299,16 @@ list GameObject::BuffsToPyList() {
 }
 
 // Missile stuff
-void GameObject::LoadMissileFromMem(DWORD base, HANDLE hProcess, bool deepLoad) {
+void GameObject::LoadMissileFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad) {
 
 	if (!deepLoad)
 		return;
 
-	DWORD spellInfoPtr = Mem::ReadDWORDFromBuffer(buff, Offsets::MissileSpellInfo);
+	DWORD64 spellInfoPtr = Mem::ReadDWORDFromBuffer(buff, Offsets::MissileSpellInfo);
 	if (spellInfoPtr == 0)
 		return;
 
-	DWORD spellDataPtr = Mem::ReadDWORD(hProcess, spellInfoPtr + Offsets::SpellInfoSpellData);
+	DWORD64 spellDataPtr = Mem::ReadDWORD(hProcess, spellInfoPtr + Offsets::SpellInfoSpellData);
 	if (spellDataPtr == 0)
 		return;
 

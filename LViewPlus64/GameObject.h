@@ -22,7 +22,7 @@ using namespace std::chrono;
 class GameObject: MemoryLoadable, SpellInterface {
 
 public:
-	void                  LoadFromMem(DWORD base, HANDLE hProcess, bool deepLoad = true);
+	void                  LoadFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad = true);
 				          
 	bool                  HasUnitTags(const UnitTag& type1) const;
 				          
@@ -92,13 +92,13 @@ public:
 	high_resolution_clock::time_point timeSinceLastPreviousPosition;
 	Vector3               previousPosition;
 				          
-	DWORD                 networkId;
-	DWORD                 address;
+	DWORD64                 networkId;
+	DWORD64                 address;
 				          
 	UnitInfo*             unitInfo = GameData::UnknownUnit;
 						 
 protected:				 
-	static const SIZE_T   sizeBuff     = 0x4000;
+	static const SIZE_T   sizeBuff     = 0x4100;
 	static const SIZE_T   sizeBuffDeep = 0x1000;
 						 
 	static BYTE           buff[sizeBuff];
@@ -106,8 +106,8 @@ protected:
 
 	// Champion related stuff
 public:
-	void                  LoadChampionFromMem(DWORD base, HANDLE hProcess, bool deepLoad = true);
-	void				  LoadBuffFromMem(DWORD base, HANDLE hProcess, bool deepLoad);
+	void                  LoadChampionFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad = true);
+	void				  LoadBuffFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad);
 	float                 GetBasicAttackDamage();
 	Spell*                GetSummonerSpell(SummonerSpellType type);
 			              
@@ -122,18 +122,18 @@ public:
 	Spell                 D = Spell(SpellSlot::D);
 	Spell                 F = Spell(SpellSlot::F);
 				          
-	DWORD                 level;
+	DWORD64                 level;
 	ItemSlot              itemSlots[7];
 
 	std::vector<BuffInstance> buffVector;
 
 private:		         
-	static DWORD          spellSlotPointerBuffer[7];
+	static DWORD64          spellSlotPointerBuffer[7];
 	static BYTE           itemListBuffer[0x100];
 
 	// Spell related stuff
 public:
-	void                  LoadMissileFromMem(DWORD base, HANDLE hProcess, bool deepLoad = true);
+	void                  LoadMissileFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad = true);
 		                  
 	bool                  HasSpellFlags(SpellFlags flags)   const override;
 	bool                  EqualSpellFlags(SpellFlags flags) const override;

@@ -27,7 +27,7 @@ public:
 	float               GetRemainingCooldown(float gameTime);
 	const char*         GetTypeStr();
 	void				MoveAndTrigger(const Vector2& pos);
-	void                LoadFromMem(DWORD base, HANDLE hProcess, bool deepLoad = true);
+	void                LoadFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad = true);
 	void                Trigger(bool charge);
 
 	bool                HasSpellFlags(SpellFlags flags)   const override;
@@ -51,7 +51,7 @@ public:
 	float             value = 0.f;
 	float			  timeCharge = 0.f;
 
-	DWORD             addressSlot;
+	DWORD64             addressSlot;
 	SpellInfo*        info;
 
 private:

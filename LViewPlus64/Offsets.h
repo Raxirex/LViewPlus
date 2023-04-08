@@ -55,9 +55,6 @@ public:
 	static int ObjManaRegen;
 	static int ObjHealthRegen;
 
-	static int ZoomClass;
-	static int MaxZoom;
-
 	static int Chat;
 	static int ChatIsOpen;
 
@@ -141,4 +138,14 @@ public:
 	static int AiManagerIsDashing;
 	static int AiManagerCurrentSegment;
 	static int AiManagerDashSpeed;
+
+	static int ObjNavPath1;
+	static int ObjNavPath10;
+	static int ObjLifeRegen;
+	static int objBonusAtkSpeed;
+	static int ObjMagicPenetration;
+	static int ObjGreyHealth;
+	static int ObjTime;
+	static int ObjZombie;
+	static int HudInstance;
 };

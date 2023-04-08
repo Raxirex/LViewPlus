@@ -9,42 +9,31 @@
 #include <Windows.h>
 #include <iostream>
 
-DWORD Mem::ReadDWORD(HANDLE hProcess, DWORD addr) {
-	DWORD_PTR ptr = NULL;
+DWORD64 Mem::ReadDWORD(HANDLE hProcess, DWORD64 addr) {
+	DWORD64 ptr = NULL;
 	SIZE_T bytesRead = 0;
 
-	ReadProcessMemory(hProcess, (DWORD*)addr, &ptr, 4, &bytesRead);
-
-	//Nt_ReadMemory(hProcess, (DWORD*)addr, &ptr, 4, &bytesRead);
+	ReadProcessMemory(hProcess, (DWORD64*)addr, &ptr, 8, &bytesRead);
 
 	return ptr;
 }
 
-
-void Mem::Read(HANDLE hProcess, DWORD addr, void* structure, int size) {
+void Mem::Read(HANDLE hProcess, DWORD64 addr, void* structure, int size) {
 	SIZE_T bytesRead = 0;
 
-	//Nt_ReadMemory(hProcess, (DWORD*)addr, structure, size, &bytesRead);
-	
-	ReadProcessMemory(hProcess, (DWORD*)addr, structure, size, &bytesRead);
+	ReadProcessMemory(hProcess, (DWORD64*)addr, structure, size, &bytesRead);
 }
 
-void Mem::Write(HANDLE hProcess, DWORD addr, void* structure, int size) {
-	SIZE_T bytesRead = 0;
-
-	WriteProcessMemory(hProcess, (DWORD*)addr, structure, size, &bytesRead);
-}
-
-DWORD Mem::ReadDWORDFromBuffer(void* buff, int position) {
-	DWORD result;
-	memcpy(&result, (char*)buff + position, 4);
+DWORD64 Mem::ReadDWORDFromBuffer(void* buff, int position) {
+	DWORD64 result;
+	memcpy(&result, (char*)buff + position, 8);
 	return result;
 }
 
-BOOL Process::IsProcessRunning(DWORD pid)
+BOOL Process::IsProcessRunning(DWORD64 pid)
 {
 	HANDLE process = OpenProcess(SYNCHRONIZE, FALSE, pid);
-	DWORD ret = WaitForSingleObject(process, 0);
+	DWORD64 ret = WaitForSingleObject(process, 0);
 	CloseHandle(process);
 	return ret == WAIT_TIMEOUT;
 }

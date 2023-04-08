@@ -69,7 +69,7 @@ void LeagueMemoryReader::HookToProcess() {
 
 
 void LeagueMemoryReader::ReadRenderer(MemSnapshot& ms) {
-	DWORD rendererAddr = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::Renderer);
+	DWORD64 rendererAddr = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::Renderer);
 	ms.renderer->LoadFromMem(rendererAddr, moduleBaseAddr, hProcess);
 
 }
@@ -89,107 +89,111 @@ void LeagueMemoryReader::FindHoveredObject(MemSnapshot& ms) {
 ///		This method reads the game objects from memory. It reads the tree structure of a std::map<int, GameObject*>
 /// in this std::map reside Champions, Minions, Turrets, Missiles, Jungle mobs etc. Basically non static objects.
 void LeagueMemoryReader::ReadObjects(MemSnapshot& ms) {
-
-	static const int maxObjects = 500;
-	static int pointerArray[maxObjects];
-
+ 
+	static const int maxObjects = 10000;
+	static DWORD64 pointerArray[maxObjects];
+ 
+	high_resolution_clock::time_point readTimeBegin;
+	duration<float, std::milli> readDuration;
+	readTimeBegin = high_resolution_clock::now();
+ 
 	ms.champions.clear();
 	ms.minions.clear();
 	ms.jungle.clear();
 	ms.missiles.clear();
 	ms.turrets.clear();
 	ms.others.clear();
-
-	int objectManager = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::ObjectManager);
-	
+ 
+	DWORD64 objectManager = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::ObjectManager);
 	static char buff[0x500];
 	Mem::Read(hProcess, objectManager, buff, 0x100);
-
-	int numMissiles, rootNode;
-	memcpy(&numMissiles, buff + Offsets::ObjectMapCount, sizeof(int));
-	memcpy(&rootNode, buff + Offsets::ObjectMapRoot, sizeof(int));
-
-	std::queue<int> nodesToVisit;
-	std::set<int> visitedNodes;
+ 
+	DWORD64 rootNode;
+	memcpy(&rootNode, buff + Offsets::ObjectMapRoot, sizeof(DWORD64));
+ 
+	std::queue<DWORD64> nodesToVisit;
+	std::set<DWORD64> visitedNodes;
 	nodesToVisit.push(rootNode);
-
+ 
 	// Read object pointers from tree
 	int nrObj = 0;
 	int reads = 0;
-	int childNode1, childNode2, childNode3, node;
+	DWORD64 childNode1, childNode2, childNode3, node;
 	while (reads < maxObjects && nodesToVisit.size() > 0) {
 		node = nodesToVisit.front();
 		nodesToVisit.pop();
 		if (visitedNodes.find(node) != visitedNodes.end())
 			continue;
-
+ 
 		reads++;
 		visitedNodes.insert(node);
 		Mem::Read(hProcess, node, buff, 0x30);
-
-		memcpy(&childNode1, buff, sizeof(int));
-		memcpy(&childNode2, buff + 4, sizeof(int));
-		memcpy(&childNode3, buff + 8, sizeof(int));
-
+ 
+		memcpy(&childNode1, buff, sizeof(DWORD64));
+		memcpy(&childNode2, buff + 0x8, sizeof(DWORD64));
+		memcpy(&childNode3, buff + 0x10, sizeof(DWORD64));
+ 
 		nodesToVisit.push(childNode1);
 		nodesToVisit.push(childNode2);
 		nodesToVisit.push(childNode3);
-
+ 
 		unsigned int netId = 0;
 		memcpy(&netId, buff + Offsets::ObjectMapNodeNetId, sizeof(int));
-
+ 
 		// Network ids of the objects we are interested in start from 0x40000000. We do this check for performance reasons.
-		if (netId - (unsigned long)0x40000000 > 0x100000) 
+		if (netId - (unsigned int)0x40000000 > 0x100000)
 			continue;
-
-		int addr;
-		memcpy(&addr, buff + Offsets::ObjectMapNodeObject, sizeof(int));
+ 
+		DWORD64 addr;
+		memcpy(&addr, buff + Offsets::ObjectMapNodeObject, sizeof(DWORD64));
 		if (addr == 0)
 			continue;
-
+ 
 		pointerArray[nrObj] = addr;
 		nrObj++;
 	}
-
+ 
 	// Read objects from the pointers we just read
 	for (int i = 0; i < nrObj; ++i) {
 		int netId;
 		Mem::Read(hProcess, pointerArray[i] + Offsets::ObjNetworkID, &netId, sizeof(int));
 		if (blacklistedObjects.find(netId) != blacklistedObjects.end())
 			continue;
-
+ 
 		std::shared_ptr<GameObject> obj;
 		auto it = ms.objectMap.find(netId);
 		if (it == ms.objectMap.end()) {
 			obj = std::shared_ptr<GameObject>(new GameObject());
 			obj->LoadFromMem(pointerArray[i], hProcess, true);
-			ms.objectMap[obj->networkId] = obj;
+			if (obj->networkId != 0 && obj->name.size() >= 2) {
+				ms.objectMap[obj->networkId] = obj;
+			}
 		}
 		else {
 			obj = it->second;
 			obj->LoadFromMem(pointerArray[i], hProcess, false);
-
+ 
 			// If the object changed its id for whatever the fuck reason then we update the map with the new index
 			if (netId != obj->networkId) {
-				ms.objectMap[obj->networkId] = obj;
+				if (obj->networkId != 0) {
+					ms.objectMap[obj->networkId] = obj;
+				}
 			}
 		}
-
+ 
 		if (obj->isVisible) {
 			obj->lastVisibleAt = ms.gameTime;
 		}
-
+ 
 		if (obj->networkId != 0) {
 			ms.indexToNetId[obj->objectIndex] = obj->networkId;
 			ms.updatedThisFrame.insert(obj->networkId);
-
-			if (blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
+ 
+			if ((obj->name.size() <= 2 && obj->name != "vi") || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
 				blacklistedObjects.insert(obj->networkId);
-			else if (obj->HasUnitTags(Unit_Champion))
+			else if (obj->HasUnitTags(Unit_Champion) && obj->level > 0)
 				ms.champions.push_back(obj);
 			else if (obj->HasUnitTags(Unit_Minion_Lane))
-				ms.minions.push_back(obj);
-			else if(obj->HasUnitTags(Unit_Minion_Summon))
 				ms.minions.push_back(obj);
 			else if (obj->HasUnitTags(Unit_Monster))
 				ms.jungle.push_back(obj);
@@ -197,10 +201,13 @@ void LeagueMemoryReader::ReadObjects(MemSnapshot& ms) {
 				ms.turrets.push_back(obj);
 			else if (obj->spellInfo != GameData::UnknownSpell)
 				ms.missiles.push_back(obj);
-			else
+			else if ((obj->HasUnitTags(Unit_Ward) && !obj->HasUnitTags(Unit_Plant)))
 				ms.others.push_back(obj);
 		}
 	}
+ 
+	readDuration = high_resolution_clock::now() - readTimeBegin;
+	ms.benchmark->readObjectsMs = readDuration.count();
 }
 
 void LeagueMemoryReader::ReadMinimap(MemSnapshot & snapshot) {
@@ -240,15 +247,8 @@ void LeagueMemoryReader::MakeSnapshot(MemSnapshot& ms) {
 	Mem::Read(hProcess, moduleBaseAddr + Offsets::GameTime, &ms.gameTime, sizeof(float));
 
 	// Checking chat
-	DWORD chatInstance = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::Chat);
+	DWORD64 chatInstance = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::Chat);
 	Mem::Read(hProcess, chatInstance + Offsets::ChatIsOpen, &ms.isChatOpen, sizeof(bool));
-
-	// Danger, ban risk!
-	DWORD zoomInstance = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::ZoomClass);
-	float zoomAmount;
-	Mem::Read(hProcess, zoomInstance + Offsets::ZoomClass, &zoomAmount, sizeof(float));
-	float val = 800.0;
-	Mem::Write(hProcess, zoomInstance + Offsets::MaxZoom, &val, sizeof(float));
 
 	if (ms.gameTime > 2) {
 		ms.updatedThisFrame.clear();

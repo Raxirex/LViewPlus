@@ -105,8 +105,8 @@ void Input::PressRightClick()
 
 void Input::Move(int x, int y)
 {
-	DWORD nx = x * 65535 / GetSystemMetrics(0);
-	DWORD ny = y * 65535 / GetSystemMetrics(1);
+	DWORD64 nx = x * 65535 / GetSystemMetrics(0);
+	DWORD64 ny = y * 65535 / GetSystemMetrics(1);
 	mouse_event(MOUSEEVENTF_MOVE | MOUSEEVENTF_VIRTUALDESK | MOUSEEVENTF_ABSOLUTE, nx, ny, 0, 0);
 
 	POINT mouse_pos;

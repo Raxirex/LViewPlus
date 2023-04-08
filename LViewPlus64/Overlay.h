@@ -53,6 +53,7 @@ private:
 
 	void           DrawOverlayWindows(PyGame& state);
 	void           DrawScriptSettings(PyGame& state, MemSnapshot& memSnapshot);
+	void           DrawBenchmarks(MemSnapshot& memSnapshot);
 	
 	void           DrawScriptError(std::shared_ptr<Script>& script);
 	void           DrawScriptCommonSettings(std::shared_ptr<Script>& script, int id);

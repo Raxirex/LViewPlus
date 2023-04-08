@@ -52,20 +52,20 @@ private:
 namespace Mem {
 
 
-	/// Reads a DWORD at the specified memory location
-	DWORD          ReadDWORD(HANDLE hProcess, DWORD addr);
+	/// Reads a DWORD64 at the specified memory location
+	DWORD64        ReadDWORD(HANDLE hProcess, DWORD64 addr);
 
 	/// Reads an arbitrary struct at the specified memory location
-	void           Read(HANDLE hProcess, DWORD addr, void* structure, int size);
-	void           Write(HANDLE hProcess, DWORD addr, void* structure, int size);
+	void           Read(HANDLE hProcess, DWORD64 addr, void* structure, int size);
+	void           Write(HANDLE hProcess, DWORD64 addr, void* structure, int size);
 
-	/// Reads a DWORD at the specified location in a given buffer
-	DWORD          ReadDWORDFromBuffer(void* buff, int position);
+	/// Reads a DWORD64 at the specified location in a given buffer
+	DWORD64        ReadDWORDFromBuffer(void* buff, int position);
 };
 
 /// WINAPI process utilities
 namespace Process {
-	BOOL           IsProcessRunning(DWORD pid);
+	BOOL           IsProcessRunning(DWORD64 pid);
 };
 
 /// League related algorithms
