@@ -15,7 +15,7 @@
 using namespace boost::python;
 
 /// Defines the mapping between the C++ and Python classes
-BOOST_PYTHON_MODULE(winstealer) {
+BOOST_PYTHON_MODULE(LViewPlus64) {
 
 	class_<SpellInfo>("SpellInfo")
 		.def_readonly("width",                &SpellInfo::width)

@@ -30,12 +30,12 @@ bool Script::LoadFunc(PyObject** loadInto, const char* funcName) {
 }
 
 bool Script::LoadInfo() {
-	PyObject* dictName = PyUnicode_FromString("winstealer_script_info");
+	PyObject* dictName = PyUnicode_FromString("LViewPlus64_script_info");
 	PyObject* dictAttr = PyObject_GetAttr(moduleObj, dictName);
 	Py_DECREF(dictName);
 
 	if (dictAttr == NULL) {
-		loadError = std::string("No `winstealer_script_info` dictionary found in script");
+		loadError = std::string("No `LViewPlus64_script_info` dictionary found in script");
 		return false;
 	}
 
@@ -80,10 +80,10 @@ void Script::Load(const char * file)
 	}
 	else {
 		if (LoadInfo() &&
-			LoadFunc(&updateFunc, "winstealer_update") &&
-			LoadFunc(&drawSettingsFunc, "winstealer_draw_settings") &&
-			LoadFunc(&loadCfgFunc, "winstealer_load_cfg") &&
-			LoadFunc(&saveCfgFunc, "winstealer_save_cfg")) {
+			LoadFunc(&updateFunc, "LViewPlus64_update") &&
+			LoadFunc(&drawSettingsFunc, "LViewPlus64_draw_settings") &&
+			LoadFunc(&loadCfgFunc, "LViewPlus64_load_cfg") &&
+			LoadFunc(&saveCfgFunc, "LViewPlus64_save_cfg")) {
 
 			loadError.clear();
 		}

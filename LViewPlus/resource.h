@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by winstealer.rc
+// Used by LViewPlus64.rc
 
 // Yeni nesneler için sonraki varsayýlan deðerler
 // 
