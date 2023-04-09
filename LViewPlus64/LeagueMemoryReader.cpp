@@ -76,7 +76,7 @@ void LeagueMemoryReader::ReadRenderer(MemSnapshot& ms) {
 
 void LeagueMemoryReader::FindHoveredObject(MemSnapshot& ms) {
 	
-	int addrObj = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::UnderMouseObject);
+	int addrObj = Mem::ReadDWORD(hProcess, (moduleBaseAddr + Offsets::UnderMouseObject) + 0x18);
 	int netId = Mem::ReadDWORD(hProcess, addrObj + Offsets::ObjNetworkID);
 	
 	auto it = ms.objectMap.find(netId);

@@ -253,7 +253,8 @@ BOOST_PYTHON_MODULE(LViewPlus64) {
 		.def("is_left", 					&PyGame::isLeft)
 		.def("point_on_line", 				&PyGame::PointOnLineSegment)
 		.def("isPointOnLineSegment",		&PyGame::isPointOnLineSegment)
-								
+						
+		.def("move_cursor",					&PyGame::MoveCursor)
 		.def("was_key_pressed",             &PyGame::WasKeyPressed)
 		.def("is_key_down",                 &PyGame::IsKeyDown)
 		.def("press_key",                   &PyGame::PressKey)

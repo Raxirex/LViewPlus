@@ -39,19 +39,14 @@ std::wstring getComputerName() {
 int main()
 {
 	printf(
-		"	Thanks for using my LView fork if you have a question you can ask on the unknowncheats \n"
-		"	Discord soon...\n"
-		"	############################################################ \n"
-		"	############################################################ \n"
-		"	############################################################ \n"
+		"	:::    :::     ::: ::::::::::: :::::::::: :::       ::: \n"
+		"	:+:    :+:     :+:     :+:     :+:        :+:       :+: \n"
+		"	+:+    +:+     +:+     +:+     +:+        +:+       +:+ \n"
+		"	+#+    +#+     +:+     +#+     +#++:++#   +#+  +:+  +#+ \n"
+		"	+#+     +#+   +#+      +#+     +#+        +#+ +#+#+ +#+ \n"
+		"	#+#      #+#+#+#       #+#     #+#         #+#+# #+#+#  \n"
+		"	########## ###     ########### ##########   ###   ###   \n\n"
 	);
-	// TODO license system example
-	/*
-	const std::wstring compName = getComputerName();
-	if (compName != L"Your computer name")
-		printf("Your computer not verifed!");
-		return 0;
-	*/
 
 	Overlay overlay = Overlay();
 	LeagueMemoryReader reader = LeagueMemoryReader();

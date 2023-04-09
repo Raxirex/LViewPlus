@@ -104,6 +104,7 @@ public:
 
 	static int ObjectManager;
 	static int LocalPlayer;
+
 	static int UnderMouseObject;
 
 	static int HeroList;
