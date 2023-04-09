@@ -29,7 +29,7 @@ Dependencies:
       3. Go into winstealer/boost
       4. Run `bootstrap.bat`
       5. Run `b2 --with-python link=shared toolset=msvc-14.1 address-model=64 variant=release`
-  5. You are done now compile the app on Release x86 (you need to compile boost::python on debug to compile on debug, which I didn't).
+  5. You are done now compile the app on Release x64 (you need to compile boost::python on debug to compile on debug, which I didn't).
  ### Setup
  All LView & LView python scripts configurations reside in config.ini file. First you must set the path to the scripts folder with the following config (you can find the config.ini in LView folder):
  
