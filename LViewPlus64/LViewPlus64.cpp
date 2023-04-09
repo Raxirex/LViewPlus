@@ -26,6 +26,8 @@ using namespace std::this_thread;
 
 using namespace std::chrono;
 
+/* bool Authenticate(); */
+
 void MainLoop(Overlay& overlay, LeagueMemoryReader& reader);
 
 std::wstring getComputerName() {
@@ -82,13 +84,14 @@ void MainLoop(Overlay& overlay, LeagueMemoryReader& reader) {
 	bool firstIter = true;
 
 	printf(
-		"	Script loaded! \n"
-		"	Waiting the win game...\n"
+		"[i] Waiting for league process...\n"
 	);
 	while (true) {
 
 		bool isLeagueWindowActive = reader.IsLeagueWindowActive();
 		if (overlay.IsVisible()) {
+			// One some systems the ingame cursor is replaced with the default Windows cursor
+			// With the WS_EX_TRANSPARENT window flag enabled the cursor is as expected but the user cannot control the overlay
 			if (Input::WasKeyPressed(HKey::F8)) {
 				overlay.ToggleTransparent();
 			}
@@ -101,23 +104,28 @@ void MainLoop(Overlay& overlay, LeagueMemoryReader& reader) {
 		}
 		try {
 			overlay.StartFrame();
+
+			// Try to find the league process and get its information necessary for reading
 			if (rehook) {
 				reader.HookToProcess();
 				rehook = false;
 				firstIter = true;
 				memSnapshot = MemSnapshot();
-				printf("	Match to be won found.\n");
+				printf("[i] Found league process. The UI will appear when the game stars.\n");
 			}
 			else {
 
 				if (!reader.IsHookedToProcess()) {
 					rehook = true;
-					printf("	Game stopped?\n");
-					printf("	Waiting the win game...\n");
+					printf("[i] League process is dead.\n");
+					printf("[i] Waiting for league process...\n");
 				}
 
 				reader.MakeSnapshot(memSnapshot);
+
+				// If the game started
 				if (memSnapshot.gameTime > 2.f) {
+					// Tell the UI that a new game has started
 					if (firstIter) {
 
 						overlay.GameStart(memSnapshot);
@@ -129,10 +137,11 @@ void MainLoop(Overlay& overlay, LeagueMemoryReader& reader) {
 			overlay.RenderFrame();
 		}
 		catch (WinApiException exception) {
+			// This should trigger only when we don't find the league process.
 			rehook = true;
 		}
 		catch (std::runtime_error exception) {
-			printf("	Error? %s \n", exception.what());
+			printf("[!] Unexpected error occured: \n [!] %s \n", exception.what());
 			break;
 		}
 	}
