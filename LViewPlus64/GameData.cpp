@@ -25,18 +25,22 @@ void GameData::Load(std::string& dataFolder)
 	std::string champIcons       = dataFolder + "/icons_champs";
 	std::string extraIcons       = dataFolder + "/icons_extra";
 
+	printf("\r	Loading item data    \n");
 	LoadItemData(itemData);
 
+	printf("\r	Loading unit data    \n");
 	LoadUnitData(unitData);
 
+	printf("\r	Loading spell data   \n");
 	LoadSpellData(spellData);
 	LoadSpellData(spellDataCustom);
 
+	printf("\r	Loading images      \n");
 	LoadIcons(spellIcons);
 	LoadIcons(champIcons);
 	LoadIcons(extraIcons);
 
-	printf("\r	Load complete please wait                             \n");
+	printf("\r	Loading complete                             \n");
 }
 
 UnitInfo * GameData::GetUnitInfoByName(std::string& name)
