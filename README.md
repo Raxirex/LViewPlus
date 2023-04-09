@@ -1,7 +1,6 @@
 # 🔥 WinStealer
 
-<img src="https://flat.badgen.net/badge/RIOT/Undetected./green?icon=terminal">  
-<img src="https://flat.badgen.net/badge/RIOT/BANS: 0/red?icon=terminal">
+<img src="https://flat.badgen.net/badge/RIOT/Undetected./green?icon=terminal">  <img src="https://flat.badgen.net/badge/RIOT/BANS: 0/red?icon=terminal">
 
 Supported regions: EUW-NA-RU-BR-TR (KOREA AND JAPAN NOT SAFE)
 
@@ -37,9 +36,6 @@ Dependencies:
   
 
 Made for educational purposes, do not use maliciously
-
-
-<img src="https://flat.badgen.net/badge/RIOT/Undetected./green?icon=terminal">  <img src="https://flat.badgen.net/badge/RIOT/BANS: 0/red?icon=terminal">
 
 ## How can i use Formatter?
 
