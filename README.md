@@ -25,9 +25,9 @@ Dependencies:
   4. boost::python. Due to the size of the boost libraries you must compile boost::python yourself:
       1. Download boost 1.75.0 (https://www.boost.org/users/history/version_1_75_0.html)
       2. Unarchive it in LViewPlus64/boost
-      3. Go into LViewPlus64/boost
-      4. Run `bootstrap.bat`
-      5. Run `b2 --with-python link=shared toolset=msvc-14.1 address-model=64 variant=release`in cmd
+      3. (Go into LViewPlus64/boost) should work without this step
+      4. (Run `bootstrap.bat`) should work without this step
+      5. (Run `b2 --with-python link=shared toolset=msvc-14.1 address-model=64 variant=release`in cmd) should work without this step
   5. You are done now compile the app on Release x64 (you need to compile boost::python on debug to compile on debug, which I didn't).
  ### Setup
  All LView & LView python scripts configurations reside in config.ini file. First you must set the path to the scripts folder with the following config (you can find the config.ini in LView folder):
