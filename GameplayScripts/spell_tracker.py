@@ -1,10 +1,10 @@
-from winstealer import *
+from LViewPlus64 import *
 
 show_local_champ = False
 show_allies = False
 show_enemies = False
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "Skill Tracker",
     "author": "bckd00r",
     "description": "Tracks spell cooldowns and levels",
@@ -50,7 +50,7 @@ def draw_overlay_on_champ(game, champ):
     draw_spell(game, champ.F, p, 20)
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global show_allies, show_enemies, show_local_champ
 
     for champ in game.champs:
@@ -71,7 +71,7 @@ def winstealer_update(game, ui):
                 draw_overlay_on_champ(game, champ)
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global show_allies, show_enemies, show_local_champ
 
     show_allies = cfg.get_bool("show_allies", False)
@@ -79,7 +79,7 @@ def winstealer_load_cfg(cfg):
     show_local_champ = cfg.get_bool("show_local_champ", False)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global show_allies, show_enemies, show_local_champ
 
     cfg.set_bool("show_allies", show_allies)
@@ -87,7 +87,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_bool("show_local_champ", show_local_champ)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global show_allies, show_enemies, show_local_champ
 
     show_allies = ui.checkbox("Show overlay on allies", show_allies)

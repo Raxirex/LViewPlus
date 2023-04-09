@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from enum import Enum
 from commons import skills
 

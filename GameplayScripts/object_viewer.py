@@ -123,6 +123,7 @@ def draw_game_object(obj, ui, additional_draw=None, set_open=False):
 
         ui.separator()
         ui.dragfloat("health", obj.health)
+        ui.dragfloat("lvl", obj.lvl)
         ui.dragfloat("mana", obj.mana)
         ui.dragfloat("max_mana", obj.max_mana)
         ui.dragfloat("health_regen", obj.health_regen)

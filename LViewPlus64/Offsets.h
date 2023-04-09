@@ -106,6 +106,11 @@ public:
 	static int LocalPlayer;
 	static int UnderMouseObject;
 
+	static int HeroList;
+	static int MinionList;
+	static int MissileList;
+	static int TurretList;
+
 	static int ObjectMapCount;
 	static int ObjectMapRoot;
 	static int ObjectMapNodeNetId;

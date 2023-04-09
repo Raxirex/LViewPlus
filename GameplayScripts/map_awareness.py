@@ -1,6 +1,6 @@
-from winstealer import *
+from LViewPlus64 import *
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "FOW",
     "author": "bckd00r",
     "description": "Cheat that improves your map awareness.",
@@ -12,7 +12,7 @@ show_last_enemy_pos = False
 show_last_enemy_pos_minimap = False
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global bound_max, show_alert_enemy_close, show_last_enemy_pos, show_last_enemy_pos_minimap
     show_alert_enemy_close = cfg.get_bool("show_alert_enemy_close", True)
     show_last_enemy_pos = cfg.get_bool("show_last_enemy_pos", True)
@@ -20,7 +20,7 @@ def winstealer_load_cfg(cfg):
     bound_max = cfg.get_float("bound_max", 4000)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global bound_max, show_alert_enemy_close, show_last_enemy_pos, show_last_enemy_pos_minimap
     cfg.set_float("bound_max", bound_max)
     cfg.set_bool("show_alert_enemy_close", show_alert_enemy_close)
@@ -28,7 +28,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_bool("show_last_enemy_pos_minimap", show_last_enemy_pos_minimap)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global bound_max, show_alert_enemy_close, show_last_enemy_pos, show_last_enemy_pos_minimap
 
     show_last_enemy_pos = ui.checkbox(
@@ -175,7 +175,7 @@ def show_last_pos_minimap(game, champ):
     )
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global bound_max, show_alert_enemy_close, show_last_enemy_pos, show_last_enemy_pos_minimap
     for champ in game.champs:
         if show_alert_enemy_close:

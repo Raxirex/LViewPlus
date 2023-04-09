@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.ByLib import *
 from commons.utils import *
 import math, itertools, time, json, requests

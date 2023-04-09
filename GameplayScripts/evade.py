@@ -1,11 +1,11 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.utils import *
 from commons.skills import *
 from commons.ByLib import *
 import json, time, itertools
 from math import *
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "Evade+",
     "author": "bckd00r",
     "description": "WS+ Evade",
@@ -23,7 +23,7 @@ toggled = False
 is_evading = False
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global fast_evade, evade_with_flash, extra_bounding_radius, evade_key, evade_type
     evade_key = cfg.get_int("evade_key", 0)
     evade_with_flash = cfg.get_bool("evade_with_flash", False)
@@ -32,7 +32,7 @@ def winstealer_load_cfg(cfg):
     evade_type = cfg.get_int("evade_type", 0)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global fast_evade, evade_with_flash, extra_bounding_radius, evade_key, evade_type
     cfg.set_int("evade_key", evade_key)
     cfg.set_bool("evade_with_flash", evade_with_flash)
@@ -41,7 +41,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_int("evade_type", evade_type)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global fast_evade, evade_with_flash, extra_bounding_radius, evade_key, evade_type
     ui.text("wsEvade")
     evade_key = ui.keyselect("Evade key", evade_key)
@@ -118,7 +118,7 @@ def evade_skills(game, player):
         is_evading = False
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global evades
 
     player = game.player

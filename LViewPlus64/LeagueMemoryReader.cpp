@@ -88,124 +88,137 @@ void LeagueMemoryReader::FindHoveredObject(MemSnapshot& ms) {
 
 ///		This method reads the game objects from memory. It reads the tree structure of a std::map<int, GameObject*>
 /// in this std::map reside Champions, Minions, Turrets, Missiles, Jungle mobs etc. Basically non static objects.
-void LeagueMemoryReader::ReadObjects(MemSnapshot& ms) {
- 
-	static const int maxObjects = 10000;
-	static DWORD64 pointerArray[maxObjects];
- 
+void LeagueMemoryReader::ReadChamps(MemSnapshot& ms) {
+
 	high_resolution_clock::time_point readTimeBegin;
 	duration<float, std::milli> readDuration;
 	readTimeBegin = high_resolution_clock::now();
- 
+
 	ms.champions.clear();
+	ms.others.clear();
+
+	auto HeroList = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::HeroList);
+	auto pList = Mem::ReadDWORD(hProcess, HeroList + 0x8);
+	UINT pSize = Mem::ReadDWORD(hProcess, HeroList + 0x10);
+	// Read objects from the pointers we just read
+	for (unsigned int i = 0; i < pSize; ++i) {
+		auto champObject = Mem::ReadDWORD(hProcess, pList + (0x8 * i));
+
+		std::shared_ptr<GameObject> obj;
+		obj = std::shared_ptr<GameObject>(new GameObject());
+		obj->LoadFromMem(champObject, hProcess, true);
+		ms.objectMap[obj->networkId] = obj;
+
+		if (obj->name.size() <= 2 || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
+			blacklistedObjects.insert(obj->networkId);
+//		else if (obj->HasUnitTags(Unit_Champion) && obj->level > 0) Level offset wrong
+		else if (obj->HasUnitTags(Unit_Champion))
+			ms.champions.push_back(obj);
+		else
+			ms.others.push_back(obj);
+	}
+
+	readDuration = high_resolution_clock::now() - readTimeBegin;
+	ms.benchmark->readObjectsMs = readDuration.count();
+}
+
+void LeagueMemoryReader::ReadMinions(MemSnapshot& ms) {
+	high_resolution_clock::time_point readTimeBegin;
+	duration<float, std::milli> readDuration;
+	readTimeBegin = high_resolution_clock::now();
+
 	ms.minions.clear();
 	ms.jungle.clear();
-	ms.missiles.clear();
-	ms.turrets.clear();
-	ms.others.clear();
- 
-	DWORD64 objectManager = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::ObjectManager);
-	static char buff[0x500];
-	Mem::Read(hProcess, objectManager, buff, 0x100);
- 
-	DWORD64 rootNode;
-	memcpy(&rootNode, buff + Offsets::ObjectMapRoot, sizeof(DWORD64));
- 
-	std::queue<DWORD64> nodesToVisit;
-	std::set<DWORD64> visitedNodes;
-	nodesToVisit.push(rootNode);
- 
-	// Read object pointers from tree
-	int nrObj = 0;
-	int reads = 0;
-	DWORD64 childNode1, childNode2, childNode3, node;
-	while (reads < maxObjects && nodesToVisit.size() > 0) {
-		node = nodesToVisit.front();
-		nodesToVisit.pop();
-		if (visitedNodes.find(node) != visitedNodes.end())
-			continue;
- 
-		reads++;
-		visitedNodes.insert(node);
-		Mem::Read(hProcess, node, buff, 0x30);
- 
-		memcpy(&childNode1, buff, sizeof(DWORD64));
-		memcpy(&childNode2, buff + 0x8, sizeof(DWORD64));
-		memcpy(&childNode3, buff + 0x10, sizeof(DWORD64));
- 
-		nodesToVisit.push(childNode1);
-		nodesToVisit.push(childNode2);
-		nodesToVisit.push(childNode3);
- 
-		unsigned int netId = 0;
-		memcpy(&netId, buff + Offsets::ObjectMapNodeNetId, sizeof(int));
- 
-		// Network ids of the objects we are interested in start from 0x40000000. We do this check for performance reasons.
-		if (netId - (unsigned int)0x40000000 > 0x100000)
-			continue;
- 
-		DWORD64 addr;
-		memcpy(&addr, buff + Offsets::ObjectMapNodeObject, sizeof(DWORD64));
-		if (addr == 0)
-			continue;
- 
-		pointerArray[nrObj] = addr;
-		nrObj++;
-	}
- 
+
+	auto MinionList = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::MinionList);
+	auto pList = Mem::ReadDWORD(hProcess, MinionList + 0x8);
+	UINT pSize = Mem::ReadDWORD(hProcess, MinionList + 0x10);
+
 	// Read objects from the pointers we just read
-	for (int i = 0; i < nrObj; ++i) {
-		int netId;
-		Mem::Read(hProcess, pointerArray[i] + Offsets::ObjNetworkID, &netId, sizeof(int));
-		if (blacklistedObjects.find(netId) != blacklistedObjects.end())
-			continue;
- 
+	for (unsigned int i = 0; i < pSize; ++i) {
+
+		auto champObject = Mem::ReadDWORD(hProcess, pList + (0x8 * i));
+
 		std::shared_ptr<GameObject> obj;
-		auto it = ms.objectMap.find(netId);
-		if (it == ms.objectMap.end()) {
-			obj = std::shared_ptr<GameObject>(new GameObject());
-			obj->LoadFromMem(pointerArray[i], hProcess, true);
-			if (obj->networkId != 0 && obj->name.size() >= 2) {
-				ms.objectMap[obj->networkId] = obj;
-			}
-		}
-		else {
-			obj = it->second;
-			obj->LoadFromMem(pointerArray[i], hProcess, false);
- 
-			// If the object changed its id for whatever the fuck reason then we update the map with the new index
-			if (netId != obj->networkId) {
-				if (obj->networkId != 0) {
-					ms.objectMap[obj->networkId] = obj;
-				}
-			}
-		}
- 
-		if (obj->isVisible) {
-			obj->lastVisibleAt = ms.gameTime;
-		}
-		std::cout << obj->name << std::endl;
-		if (obj->networkId != 0) {
-			ms.indexToNetId[obj->objectIndex] = obj->networkId;
-			ms.updatedThisFrame.insert(obj->networkId);
- 
-			if (obj->name.size() <= 2 || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
-				blacklistedObjects.insert(obj->networkId);
-			else if (obj->HasUnitTags(Unit_Champion) && obj->level > 0)
-				ms.champions.push_back(obj);
-			else if (obj->HasUnitTags(Unit_Minion_Lane))
-				ms.minions.push_back(obj);
-			else if (obj->HasUnitTags(Unit_Monster))
-				ms.jungle.push_back(obj);
-			else if (obj->HasUnitTags(Unit_Structure_Turret))
-				ms.turrets.push_back(obj);
-			else if (obj->spellInfo != GameData::UnknownSpell)
-				ms.missiles.push_back(obj);
-			else if ((obj->HasUnitTags(Unit_Ward) && !obj->HasUnitTags(Unit_Plant)))
-				ms.others.push_back(obj);
-		}
+		obj = std::shared_ptr<GameObject>(new GameObject());
+		obj->LoadFromMem(champObject, hProcess, true);
+		ms.objectMap[obj->networkId] = obj;
+
+		if (obj->name.size() <= 2 || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
+			blacklistedObjects.insert(obj->networkId);
+		else if (obj->HasUnitTags(Unit_Minion_Lane))
+			ms.minions.push_back(obj);
+		else if (obj->HasUnitTags(Unit_Monster))
+			ms.jungle.push_back(obj);
+		else if ((obj->HasUnitTags(Unit_Ward) && !obj->HasUnitTags(Unit_Plant)))
+			ms.others.push_back(obj);
 	}
- 
+
+	readDuration = high_resolution_clock::now() - readTimeBegin;
+	ms.benchmark->readObjectsMs = readDuration.count();
+}
+/*
+void LeagueMemoryReader::ReadMissiles(MemSnapshot& ms) {
+	high_resolution_clock::time_point readTimeBegin;
+	duration<float, std::milli> readDuration;
+	readTimeBegin = high_resolution_clock::now();
+
+	ms.missiles.clear();
+
+	auto MissileList = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::MissileList);
+	auto pList = Mem::ReadDWORD(hProcess, MissileList + 0x8);
+	UINT pSize = Mem::ReadDWORD(hProcess, MissileList + 0x10);
+
+	// Read objects from the pointers we just read
+	for (unsigned int i = 0; i < pSize; ++i) {
+
+		auto champObject = Mem::ReadDWORD(hProcess, pList + (0x8 * i));
+
+		std::shared_ptr<GameObject> obj;
+		obj = std::shared_ptr<GameObject>(new GameObject());
+		obj->LoadFromMem(champObject, hProcess, true);
+		ms.objectMap[obj->networkId] = obj;
+
+		if (obj->name.size() <= 2 || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
+			blacklistedObjects.insert(obj->networkId);
+		else if (obj->spellInfo != GameData::UnknownSpell)
+			ms.missiles.push_back(obj);
+		else if ((obj->HasUnitTags(Unit_Ward) && !obj->HasUnitTags(Unit_Plant)))
+			ms.others.push_back(obj);
+		}
+
+	readDuration = high_resolution_clock::now() - readTimeBegin;
+	ms.benchmark->readObjectsMs = readDuration.count();
+}
+*/
+void LeagueMemoryReader::ReadTurrets(MemSnapshot& ms) {
+	high_resolution_clock::time_point readTimeBegin;
+	duration<float, std::milli> readDuration;
+	readTimeBegin = high_resolution_clock::now();
+
+	ms.turrets.clear();
+	auto TurretList = Mem::ReadDWORD(hProcess, moduleBaseAddr + Offsets::TurretList);
+	auto pList = Mem::ReadDWORD(hProcess, TurretList + 0x8);
+	UINT pSize = Mem::ReadDWORD(hProcess, TurretList + 0x10);
+
+	// Read objects from the pointers we just read
+	for (unsigned int i = 0; i < pSize; ++i) {
+
+		auto champObject = Mem::ReadDWORD(hProcess, pList + (0x8 * i));
+
+		std::shared_ptr<GameObject> obj;
+		obj = std::shared_ptr<GameObject>(new GameObject());
+		obj->LoadFromMem(champObject, hProcess, true);
+		ms.objectMap[obj->networkId] = obj;
+
+		if (obj->name.size() <= 2 || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
+			blacklistedObjects.insert(obj->networkId);
+		else if (obj->HasUnitTags(Unit_Structure_Turret))
+			ms.turrets.push_back(obj);
+		else if ((obj->HasUnitTags(Unit_Ward) && !obj->HasUnitTags(Unit_Plant)))
+			ms.others.push_back(obj);
+	}
+
 	readDuration = high_resolution_clock::now() - readTimeBegin;
 	ms.benchmark->readObjectsMs = readDuration.count();
 }
@@ -254,7 +267,10 @@ void LeagueMemoryReader::MakeSnapshot(MemSnapshot& ms) {
 		ms.updatedThisFrame.clear();
 		ReadRenderer(ms);
 		ReadMinimap(ms);
-	    ReadObjects(ms);
+	    ReadChamps(ms);
+		ReadMinions(ms);
+//		ReadMissiles(ms);
+		ReadTurrets(ms);
 		ClearMissingObjects(ms);
 		FindPlayerChampion(ms);
 		FindHoveredObject(ms);

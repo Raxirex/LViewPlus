@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.utils import *
 from commons.skills import *
 from commons.items import *
@@ -6,7 +6,7 @@ from commons.targeting import *
 from commons.ByPrediction import *
 import json, time, math
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "WS+ Jinx",
     "author": "bckd00r",
     "description": "WS+ Jinx",
@@ -41,7 +41,7 @@ w = {"Range": 1400}
 e = {"Range": 900}
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global combo_key, harass_key, laneclear_key, killsteal_key, flee_key
     global use_q_in_combo, use_w_in_combo, use_e_in_combo, use_r_in_combo
     global steal_kill_with_w, steal_kill_with_r
@@ -68,7 +68,7 @@ def winstealer_load_cfg(cfg):
     steal_kill_with_r = cfg.get_bool("steal_kill_with_r", False)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global combo_key, harass_key, laneclear_key, killsteal_key, flee_key
     global use_q_in_combo, use_w_in_combo, use_e_in_combo, use_r_in_combo
     global steal_kill_with_w, steal_kill_with_r
@@ -95,7 +95,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_bool("steal_kill_with_r", steal_kill_with_r)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global combo_key, harass_key, laneclear_key, killsteal_key, flee_key
     global use_q_in_combo, use_w_in_combo, use_e_in_combo, use_r_in_combo
     global steal_kill_with_w, steal_kill_with_r
@@ -300,7 +300,7 @@ def Laneclear(game):
                 lastQ = game.time
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     self = game.player
 
     if self.is_alive and game.is_point_on_screen(self.pos) and not game.isChatOpen:

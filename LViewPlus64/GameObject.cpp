@@ -159,9 +159,10 @@ void GameObject::LoadFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad) {
 			else
 				name = std::string("");
 		}
-
 		unitInfo = GameData::GetUnitInfoByName(name);
 	}
+/* doesnt work for now
+
 	// Don't use buffmanager for minions making lag idk ?
 	if (HasUnitTags(Unit_Champion)) {
 		LoadChampionFromMem(base, hProcess, deepLoad);
@@ -173,9 +174,10 @@ void GameObject::LoadFromMem(DWORD64 base, HANDLE hProcess, bool deepLoad) {
 	else if (HasUnitTags(Unit_Monster)) {
 		LoadBuffFromMem(base, hProcess, deepLoad);
 	}
-		/*else if (HasUnitTags(Unit_Minion_Lane)) {
-			LoadBuffFromMem(base, hProcess, deepLoad);
-		}*/
+	else if (HasUnitTags(Unit_Minion_Lane)) {
+		LoadBuffFromMem(base, hProcess, deepLoad);
+		
+	*/
 }
 
 DWORD64 GameObject::spellSlotPointerBuffer[7] = {};

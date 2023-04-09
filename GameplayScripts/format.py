@@ -1,19 +1,19 @@
 import subprocess
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     pass
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     pass
 
 
-def winstealer_draw_settings(objs, ui):
+def LViewPlus64_draw_settings(objs, ui):
     pass
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     pass
 
 

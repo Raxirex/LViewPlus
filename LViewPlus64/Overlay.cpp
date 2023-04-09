@@ -162,8 +162,8 @@ void Overlay::StartFrame()
 void Overlay::Update(MemSnapshot& memSnapshot) {
 
 	// Simple check to see if game ended
-	if (memSnapshot.champions.size() == 0 || !isWindowVisible)
-		return;
+//	if (memSnapshot.champions.size() == 0 || !isWindowVisible)
+//		return;
 
 	PyGame state = PyGame::ConstructFromMemSnapshot(memSnapshot);
 

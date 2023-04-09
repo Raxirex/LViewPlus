@@ -8,10 +8,10 @@ int Offsets::ObjIndex                        = 0x10; //
 int Offsets::ObjTeam                         = 0x3C; //
 int Offsets::ObjMissileName                  = 0x6C;
 int Offsets::ObjNetworkID                    = 0xC8; //
-int Offsets::ObjPos                          = 0x220; //
+int Offsets::ObjPos                          = 0x220; // 0xF8
 int Offsets::ObjMissileSpellCast             = 0x250;
 int Offsets::ObjVisibility                   = 0x310; //
-int Offsets::ObjSpawnCount                   = 0x328; //
+int Offsets::ObjSpawnCount                   = 0x328; // IsAlive = 0x21E6E0; isTargetable = 0xEB0; isVisible = 0x456f8ad0; ? ? ?
 int Offsets::ObjSrcIndex                     = 0x290;
 int Offsets::ObjMana                         = 0x340; //
 int Offsets::ObjMaxMana						 = 0x358; //
@@ -30,7 +30,7 @@ int Offsets::ObjMoveSpeed                    = 0x1694; //
 int Offsets::ObjSpellBook                    = 0x2408;
 int Offsets::ObjTransformation               = 0x3040;
 int Offsets::ObjName                         = 0x38A0; //
-int Offsets::ObjLvl                          = 0x4030; //
+int Offsets::ObjLvl                          = 0x4030; // ????
 int Offsets::ObjExpiry                       = 0x298; 
 int Offsets::ObjCrit                         = 0x1B70; //
 int Offsets::ObjCritMulti                    = 0x1B58; //
@@ -98,6 +98,12 @@ int Offsets::SpellSlotSmiteTimer = 0x64;
 int Offsets::SpellSlotSmiteCharges = 0x58;
 
 int Offsets::ObjectManager = 0x20D5978; // 15.7 [actual address in first opcode] 89 57 10 48 8B 0D ? ? ? ?
+
+int Offsets::HeroList = 0x20D5AA0; //0x20D5978
+int Offsets::MinionList = 0x3930220;
+int Offsets::MissileList = 0x20D5978;
+int Offsets::TurretList = 0x517d990;
+
 int Offsets::LocalPlayer = 0x518EB00; // 15.7 48 8B 3D ?? ?? ?? ?? 48 3B CF
 int Offsets::UnderMouseObject = 0x3930408; // 15.7 48 89 0D ? ? ? ? 48 8D 05 ? ? ? ? 48 89 01 33 D2
 

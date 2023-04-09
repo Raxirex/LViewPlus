@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.utils import *
 from commons.skills import *
 from commons.items import *
@@ -6,7 +6,7 @@ from commons.targeting import *
 from evade import checkEvade
 import json, time, math
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "WS+ Twitch",
     "author": "bckd00r",
     "description": "WS+ Twitch",
@@ -46,7 +46,7 @@ r = {"Range": 900}
 spell_priority = {"Q": 0, "W": 0, "E": 0, "R": 0}
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global use_q_in_combo, use_w_in_combo, use_e_in_combo, use_r_in_combo
     global draw_w_range, draw_e_range, draw_r_range
     global spell_priority, combo_key, harass_key, laneclear_key, killsteal_key
@@ -76,7 +76,7 @@ def winstealer_load_cfg(cfg):
     )
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global use_q_in_combo, use_w_in_combo, use_e_in_combo, use_r_in_combo
     global draw_w_range, draw_e_range, draw_r_range
     global spell_priority, combo_key, harass_key, laneclear_key, killsteal_key
@@ -100,7 +100,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_bool("lane_clear_with_e", lane_clear_with_e)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global use_q_in_combo, use_w_in_combo, use_e_in_combo, use_r_in_combo
     global draw_w_range, draw_e_range, draw_r_range
     global spell_priority, combo_key, harass_key, laneclear_key, killsteal_key
@@ -262,7 +262,7 @@ def Laneclear(game):
                 e_spell.trigger(False)
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global use_q_in_combo, use_w_in_combo, use_w_in_combo, use_r_in_combo
     global draw_q_range, draw_w_range, draw_e_range, draw_r_range
     global q, w, e, r
