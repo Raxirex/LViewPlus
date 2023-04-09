@@ -45,6 +45,3 @@ Made for educational purposes, do not use maliciously
 
 First, you will need to do "pip install black" because the python definitions need to be defined in every way. It doesn't see some files, but that's okay. Then put it to "Gameplayscripts" and type "python format.py".
 
-Made by bckd00r
-
-All credits go to the original [author](https://github.com/CNLouisLiu/LViewLoL)
