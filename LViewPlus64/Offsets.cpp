@@ -34,6 +34,7 @@ int Offsets::ObjMoveSpeed                    = 0x1694; //
 int Offsets::ObjSpellBook                    = 0x29c8; // 0x3118
 int Offsets::ObjTransformation               = 0x3040;
 int Offsets::ObjName                         = 0x38A0; //
+int Offsets::PlayerName						 = 0x60; //
 int Offsets::ObjLvl                          = 0x4030; // ????
 int Offsets::ObjExpiry                       = 0x298; 
 int Offsets::ObjCrit                         = 0x1B70; //

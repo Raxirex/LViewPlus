@@ -244,3 +244,10 @@ def LViewPlus64_update(game, ui):
     draw_list("Others", game.others, ui, draw_game_object)
 
     ui.end()
+
+
+    for obj in game.minions:
+        if game.is_point_on_screen(obj.pos):
+            navBegin = game.world_to_screen(obj.navBegin)
+            navEnd = game.world_to_screen(obj.navEnd)
+            game.draw_line(Vec2(navBegin.x, navBegin.y), Vec2(navEnd.x, navEnd.y), 2, Color.YELLOW)

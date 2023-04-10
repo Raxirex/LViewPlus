@@ -35,6 +35,7 @@ public:
 	static int ObjSpellBook;
 	static int ObjTransformation;
 	static int ObjName;
+	static int PlayerName;
 	static int ObjLvl;
 	static int ObjExpiry;
 	static int ObjCrit;
