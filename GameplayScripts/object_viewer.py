@@ -223,7 +223,7 @@ def LViewPlus64_update(game, ui):
     ui.begin("Object Viewer")
 
     ui.dragfloat("time", game.time)
-    ui.dragfloat("chat", game.isChatOpen)
+    ui.dragint("chat", game.isChatOpen)
     ui.dragint("ping", game.ping)
     if game.hovered_obj:
         ui.labeltext(

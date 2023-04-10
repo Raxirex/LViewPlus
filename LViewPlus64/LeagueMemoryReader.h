@@ -34,12 +34,12 @@ private:
 
 	// Process related
 	HANDLE                      hProcess = NULL;
-	DWORD                       pid      = 0;
+	DWORD						pid      = 0;
 	HWND                        hWindow  = NULL;
 							   
 	// Memory related		   
 	DWORD_PTR                   moduleBaseAddr    = 0;
-	DWORD64                       moduleSize        = 0;
+	DWORD                       moduleSize        = 0;
 	BOOL                        is64Bit           = FALSE;
 
 private:
@@ -50,6 +50,7 @@ private:
 	std::set<std::string>       blacklistedObjectNames;
 	
 	void                        ReadRenderer(MemSnapshot& snapshot);
+	void                        FindMousePos(MemSnapshot& snapshot);
 	void                        ReadChamps(MemSnapshot& snapshot);
 	void                        ReadMinions(MemSnapshot& snapshot);
 	void                        ReadMissiles(MemSnapshot& snapshot);

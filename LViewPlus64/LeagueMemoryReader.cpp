@@ -86,6 +86,30 @@ void LeagueMemoryReader::FindHoveredObject(MemSnapshot& ms) {
 		ms.hoveredObject = nullptr;
 }
 
+/*
+Vector3 GetMouseWorldPos()
+{
+	DWORD64 MousePtr = DEFINE_RVA(Offsets::HudInstance);
+	auto aux1 = *(DWORD*)MousePtr;
+	aux1 += 0x14;
+	auto aux2 = *(DWORD*)aux1;
+	aux2 += 0x1C;
+
+	return *(Vector3*)(aux2);
+}
+*/
+
+void LeagueMemoryReader::FindMousePos(MemSnapshot& ms) {
+	DWORD64 MousePtr = *(DWORD64*)(*(DWORD64*)((DWORD64)GetModuleHandle(NULL) + Offsets::HudInstance) + 0x14) + 0x1C;
+
+	Vector3 mousePos;
+
+	mousePos.x = *(float*)(MousePtr + 0x0);
+	mousePos.y = *(float*)(MousePtr + 0x4);
+	mousePos.z = *(float*)(MousePtr + 0x8);
+
+}
+
 ///		This method reads the game objects from memory. It reads the tree structure of a std::map<int, GameObject*>
 /// in this std::map reside Champions, Minions, Turrets, Missiles, Jungle mobs etc. Basically non static objects.
 void LeagueMemoryReader::ReadChamps(MemSnapshot& ms) {
@@ -157,7 +181,7 @@ void LeagueMemoryReader::ReadMinions(MemSnapshot& ms) {
 	readDuration = high_resolution_clock::now() - readTimeBegin;
 	ms.benchmark->readObjectsMs = readDuration.count();
 }
-/*
+
 void LeagueMemoryReader::ReadMissiles(MemSnapshot& ms) {
 	high_resolution_clock::time_point readTimeBegin;
 	duration<float, std::milli> readDuration;
@@ -178,7 +202,6 @@ void LeagueMemoryReader::ReadMissiles(MemSnapshot& ms) {
 		obj = std::shared_ptr<GameObject>(new GameObject());
 		obj->LoadFromMem(champObject, hProcess, true);
 		ms.objectMap[obj->networkId] = obj;
-
 		if (obj->name.size() <= 2 || blacklistedObjectNames.find(obj->name) != blacklistedObjectNames.end())
 			blacklistedObjects.insert(obj->networkId);
 		else if (obj->spellInfo != GameData::UnknownSpell)
@@ -190,7 +213,7 @@ void LeagueMemoryReader::ReadMissiles(MemSnapshot& ms) {
 	readDuration = high_resolution_clock::now() - readTimeBegin;
 	ms.benchmark->readObjectsMs = readDuration.count();
 }
-*/
+
 void LeagueMemoryReader::ReadTurrets(MemSnapshot& ms) {
 	high_resolution_clock::time_point readTimeBegin;
 	duration<float, std::milli> readDuration;
@@ -266,10 +289,11 @@ void LeagueMemoryReader::MakeSnapshot(MemSnapshot& ms) {
 	if (ms.gameTime > 2) {
 		ms.updatedThisFrame.clear();
 		ReadRenderer(ms);
+		FindMousePos(ms);
 		ReadMinimap(ms);
 	    ReadChamps(ms);
 		ReadMinions(ms);
-//		ReadMissiles(ms);
+		ReadMissiles(ms);
 		ReadTurrets(ms);
 		ClearMissingObjects(ms);
 		FindPlayerChampion(ms);
