@@ -1,4 +1,4 @@
-# 🔥 WinStealer
+# 🔥 LViewPlus64
 
 <img src="https://flat.badgen.net/badge/RIOT/Undetected./green?icon=terminal">  <img src="https://flat.badgen.net/badge/RIOT/BANS: 0/red?icon=terminal">
 
@@ -19,15 +19,15 @@ Sorry for bad image quality but this is just an image of its current state: [ 17
 
 You need Visual Studio 2019 to compile this.
 Dependencies:
-  1. python39: dlls and includes are already in project. You need to install python 3.9 for 64bits (Make sure you check the Add to PATH checkbox in the installer: https://www.python.org/ftp/python/3.9.0/python-3.9.0.exe)
+  1. python39: dlls and includes are already in project. You need to install python 3.9 for 64bits (Make sure you check the Add to PATH checkbox in the installer: https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64.exe)
   3. aws-lambda: dlls and includes are already in project (was used for authentication)
   3. directx 11: Must install directx end user runtimes: https://www.microsoft.com/en-us/download/details.aspx?id=35 .Extract this and run dxsetup
   4. boost::python. Due to the size of the boost libraries you must compile boost::python yourself:
-      1. Download boost 1.75.0 
-      2. Unarchive it in LView/boost
-      3. Go into winstealer/boost
-      4. Run `bootstrap.bat`
-      5. Run `b2 --with-python link=shared toolset=msvc-14.1 address-model=64 variant=release`
+      1. Download boost 1.75.0 (https://www.boost.org/users/history/version_1_75_0.html)
+      2. Unarchive it in LViewPlus64/boost
+      3. (Go into LViewPlus64/boost) should work without this step
+      4. (Run `bootstrap.bat`) should work without this step
+      5. (Run `b2 --with-python link=shared toolset=msvc-14.1 address-model=64 variant=release`in cmd) should work without this step
   5. You are done now compile the app on Release x64 (you need to compile boost::python on debug to compile on debug, which I didn't).
  ### Setup
  All LView & LView python scripts configurations reside in config.ini file. First you must set the path to the scripts folder with the following config (you can find the config.ini in LView folder):
