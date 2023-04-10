@@ -127,10 +127,10 @@ int Offsets::MissileDestIdx = 0x310;
 int Offsets::MissileStartPos = 0x2D0;
 int Offsets::MissileEndPos = 0x2DC;
 
-int Offsets::MinimapObject                = 0x2FA7FDC;
-int Offsets::MinimapObjectHud             = 0x88;
-int Offsets::MinimapHudPos                = 0x60;
-int Offsets::MinimapHudSize               = 0x68;
+int Offsets::MinimapObject                = 0x5181C88; //
+int Offsets::MinimapObjectHud             = 0x320; //
+int Offsets::MinimapHudPos                = 0x58; //
+int Offsets::MinimapHudSize               = 0x68; //
 
 int Offsets::AiManagerStartPath = 0x1bc;
 int Offsets::AiManagerEndPath = 0x1c0;
