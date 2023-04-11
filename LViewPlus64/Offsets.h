@@ -56,6 +56,10 @@ public:
 	static int ObjManaRegen;
 	static int ObjHealthRegen;
 
+	static int Ping;
+	static int OffPing;
+	static int ShowPing;
+
 	static int Chat;
 	static int ChatIsOpen;
 

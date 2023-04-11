@@ -55,6 +55,10 @@ int Offsets::ObjAdditionalApMulti			 = 0x122C;
 int Offsets::ObjManaRegen					 = 0x1134;
 int Offsets::ObjHealthRegen					 = 0x1690; //
 
+int Offsets::Ping							 = 0x51AD648; //
+int Offsets::OffPing						 = 0x178; //
+int Offsets::ShowPing						 = 0x6D8; //
+
 int Offsets::Chat							 = 0x518ECB8; //
 int Offsets::ChatIsOpen						 = 0xC90; //
 
@@ -94,7 +98,7 @@ int Offsets::SpellSlotLevel = 0x28; //
 int Offsets::SpellSlotTime = 0x30; //
 int Offsets::SpellSlotAmmo = 0x54; // Ammo from Jhin/Graves
 int Offsets::SpellSlotCharges = 0x58;
-int Offsets::SpellSlotTimeCharge = 0x30; //
+int Offsets::SpellSlotTimeCharge = 0x30; // ??
 int Offsets::SpellSlotDamage = 0x94;
 int Offsets::SpellSlotSpellInfo = 0x130; //
 int Offsets::SpellInfoSpellData = 0x60; //

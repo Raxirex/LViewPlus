@@ -218,6 +218,7 @@ BOOST_PYTHON_MODULE(LViewPlus64) {
 		.def_readonly("player",             &PyGame::GetLocalChampion)
 		.def_readonly("time",               &PyGame::gameTime)
 		.def_readonly("isChatOpen",			&PyGame::isChatOpen)
+		.def_readonly("mousePos",			&PyGame::mousePos)
 		.def_readonly("ping",				&PyGame::ping)
 		.def_readonly("map",                &PyGame::GetMap)
 										    

@@ -50,12 +50,12 @@ private:
 	std::set<std::string>       blacklistedObjectNames;
 	
 	void                        ReadRenderer(MemSnapshot& snapshot);
-	void                        FindMousePos(MemSnapshot& snapshot);
 	void                        ReadChamps(MemSnapshot& snapshot);
 	void                        ReadMinions(MemSnapshot& snapshot);
 	void                        ReadMissiles(MemSnapshot& snapshot);
 	void                        ReadTurrets(MemSnapshot& snapshot);
 	void                        ReadMinimap(MemSnapshot& snapshot);
+	void                        GetMousePos(MemSnapshot& snapshot);
 	void                        FindPlayerChampion(MemSnapshot& snapshot);
 	void                        ClearMissingObjects(MemSnapshot& snapshot);
 	void                        FindHoveredObject(MemSnapshot& ms);

@@ -225,6 +225,9 @@ def LViewPlus64_update(game, ui):
     ui.dragfloat("time", game.time)
     ui.dragint("chat", game.isChatOpen)
     ui.dragint("ping", game.ping)
+#    ui.dragfloat("mousePos", game.mousePos)
+    ui.labeltext("mousePos", f"x={game.mousePos.x:.2f}, y={game.mousePos.y:.2f}, z={game.mousePos.z:.2f}")
+
     if game.hovered_obj:
         ui.labeltext(
             "hovered_obj", f"{game.hovered_obj.name} ({hex(game.hovered_obj.address)})"
