@@ -277,7 +277,7 @@ void LeagueMemoryReader::MakeSnapshot(MemSnapshot& ms) {
 		ms.updatedThisFrame.clear();
 		ReadRenderer(ms);
 		ReadMinimap(ms);
-	    ReadChamps(ms);
+		ReadChamps(ms);
 		ReadMinions(ms);
 		ReadMissiles(ms);
 		ReadTurrets(ms);
