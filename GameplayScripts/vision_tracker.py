@@ -1,7 +1,7 @@
-from winstealer import *
+from LViewPlus64 import *
 import json
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "Vision Tracker",
     "author": "bckd00r",
     "description": "Tracks enemy invisible objects and clones",
@@ -100,7 +100,7 @@ clones = {
 }
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global show_clones, show_wards, show_traps, ward_awareness, traps, wards
 
     ward_awareness = cfg.get_bool("ward_awareness", True)
@@ -113,7 +113,7 @@ def winstealer_load_cfg(cfg):
     wards = json.loads(cfg.get_str("wards", json.dumps(wards)))
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global show_clones, show_wards, show_traps, ward_awareness, traps, wards
 
     cfg.set_bool("ward_awareness", ward_awareness)
@@ -126,7 +126,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_str("wards", json.dumps(wards))
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global traps, wards
     global show_clones, show_wards, show_traps, ward_awareness
 
@@ -153,7 +153,6 @@ def winstealer_draw_settings(game, ui):
 
 
 def draw(game, obj, radius, show_circle_world, show_circle_map, icon):
-
     sp = game.world_to_screen(obj.pos)
 
     if game.is_point_on_screen(sp):
@@ -212,8 +211,7 @@ def wardAwareness(game):
         drawAwareness(game, baron_top_bush)
 
 
-def winstealer_update(game, ui):
-
+def LViewPlus64_update(game, ui):
     global show_clones, show_wards, show_traps
     global traps, wards, clones
 

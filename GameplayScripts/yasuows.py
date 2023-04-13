@@ -1,11 +1,11 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.utils import *
 from commons.skills import *
 from commons.items import *
 from commons.targeting import *
 import json, time, math
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "WS+ Yasuo",
     "author": "bckd00r",
     "description": "WS+ Yasuo",
@@ -42,7 +42,7 @@ e = {"Range": 475}
 r = {"Range": 1800}
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global use_q_in_combo, use_e_in_combo, use_r_in_combo
     global draw_q_range, draw_e_range, draw_r_range
     global combo_key, harass_key, laneclear_key, killsteal_key
@@ -74,7 +74,7 @@ def winstealer_load_cfg(cfg):
     use_w_on_evade = cfg.get_bool("use_w_on_evade", False)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global use_q_in_combo, use_e_in_combo, use_r_in_combo
     global draw_q_range, draw_e_range, draw_r_range
     global combo_key, harass_key, laneclear_key, killsteal_key
@@ -107,7 +107,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_bool("use_w_on_evade", use_w_on_evade)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global use_q_in_combo, use_e_in_combo, use_r_in_combo
     global draw_q_range, draw_e_range, draw_r_range
     global combo_key, harass_key, laneclear_key, killsteal_key
@@ -420,7 +420,7 @@ def Laneclear(game):
             q_spell.move_and_trigger(game.world_to_screen(minion.pos))
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global use_q_in_combo, use_e_in_combo, use_r_in_combo
     global draw_q_range, draw_e_range, draw_r_range
     global combo_key, harass_key, laneclear_key, killsteal_key

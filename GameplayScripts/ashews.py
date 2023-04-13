@@ -1,11 +1,11 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.utils import *
 from commons.skills import *
 from commons.items import *
 from commons.targeting import *
 import json, time, math
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "WS+ Ashe",
     "author": "bckd00r",
     "description": "WS+ Ashe",
@@ -44,7 +44,7 @@ lastQ = 0
 lastR = 0
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global use_q_in_combo, use_w_in_combo, use_r_in_combo
     global draw_w_range
     global combo_key, harass_key, laneclear_key, ks_key
@@ -75,7 +75,7 @@ def winstealer_load_cfg(cfg):
     lane_clear_with_w = cfg.get_bool("lane_clear_with_w", False)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global use_q_in_combo, use_w_in_combo, use_r_in_combo
     global draw_w_range
     global combo_key, harass_key, laneclear_key, ks_key
@@ -107,7 +107,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_bool("lane_clear_with_w", lane_clear_with_w)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global use_q_in_combo, use_w_in_combo, use_r_in_combo
     global draw_w_range
     global combo_key, harass_key, laneclear_key, ks_key
@@ -311,14 +311,13 @@ def Laneclear(game):
             w_spell.move_and_trigger(game.world_to_screen(minion.pos))
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global combo_key, harass_key, laneclear_key, ks_key
     global draw_w_range
 
     self = game.player
 
     if self.is_alive and not game.isChatOpen:
-
         if draw_w_range:
             game.draw_circle_world(game.player.pos, w["Range"], 100, 2, Color.WHITE)
             game.draw_circle_world(game.player.pos, 800, 100, 2, Color.WHITE)

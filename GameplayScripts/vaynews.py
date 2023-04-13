@@ -1,11 +1,11 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.items import *
 from commons.targeting import *
 from commons.utils import *
 import json, time, math
 
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "WS+ Vayne",
     "author": "bckd00r",
     "description": "WS+ Vayne",
@@ -44,7 +44,7 @@ use_q_with_harass = True
 use_e_with_harass = False
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global use_q_in_combo, use_e_in_combo, use_r_in_combo
     global draw_q_range, draw_e_range
     global combo_key, harass_key
@@ -78,7 +78,7 @@ def winstealer_load_cfg(cfg):
     MaxRCountForUse = cfg.get_float("MaxRCountForUse", 1)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global use_q_in_combo, use_e_in_combo, use_r_in_combo
     global draw_q_range, draw_e_range
     global combo_key, harass_key
@@ -113,7 +113,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_float("MaxRCountForUse", MaxRCountForUse)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global use_q_in_combo, use_e_in_combo, use_r_in_combo
     global draw_q_range, draw_e_range
     global combo_key, harass_key
@@ -329,7 +329,7 @@ def AntiGap(game):
         #     q_spell.move_and_trigger(game.world_to_screen(kitePos))
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global draw_q_range, draw_e_range
     global combo_key, harass_key
     self = game.player

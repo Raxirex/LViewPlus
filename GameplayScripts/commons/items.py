@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 
 
 def crit_from_items(items):

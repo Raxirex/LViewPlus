@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from time import time
 from commons.skills import *
 from commons.items import *
@@ -9,7 +9,7 @@ import array
 import commons.damage_calculator as damage_calculator
 from win32api import GetSystemMetrics
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "Visuals",
     "author": "bckd00r",
     "description": "Draw indicators for different things",
@@ -40,7 +40,7 @@ colors = {
 selectedColor = 0
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global colors
     global turret_ranges, enemy_ranges, attack_range, draw_spell_range
     global skillshots, skillshots_predict, skillshots_min_range, minion_last_hit, skillshots_max_speed, skillshots_show_ally, skillshots_show_enemy
@@ -58,7 +58,7 @@ def winstealer_load_cfg(cfg):
     skillshots_max_speed = cfg.get_float("skillshots_max_speed", 2500)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global turret_ranges, enemy_ranges, attack_range, draw_spell_range
     global skillshots, skillshots_predict, skillshots_min_range, minion_last_hit, skillshots_max_speed, skillshots_show_ally, skillshots_show_enemy
     cfg.set_bool("turret_ranges", turret_ranges)
@@ -75,7 +75,7 @@ def winstealer_save_cfg(cfg):
     cfg.set_float("skillshots_max_speed", skillshots_max_speed)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global turret_ranges, enemy_ranges, attack_range, minion_last_hit, draw_spell_range
     global skillshots, skillshots_predict, skillshots_min_range, skillshots_max_speed, skillshots_show_ally, skillshots_show_enemy
     global selectedColor, colors
@@ -144,6 +144,7 @@ def draw_recall_states(game, player):
                     Color.WHITE,
                 )
                 i += 50
+
 
 def draw_turret_ranges(game, player):
     for turret in game.turrets:
@@ -327,12 +328,12 @@ def draw_skillshots(game, player):
                     )
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global turret_ranges, attack_range, skillshots, minion_last_hit, draw_spell_range, skillshots_predict
 
     player = game.player
 
-    game.draw_text(Vec2(GetSystemMetrics(1) - 100, 0), "WinStealer++", Color.GREEN)
+    game.draw_text(Vec2(GetSystemMetrics(1) - 100, 0), "LViewPlus64++", Color.GREEN)
 
     draw_recall_states(game, player)
     if attack_range:

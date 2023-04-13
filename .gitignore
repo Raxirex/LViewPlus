@@ -1,0 +1,10 @@
+.vs
+boost
+release
+LViewPlus64/config.ini
+LViewPlus64/x64/
+LViewPlus64/config.ini
+GameplayScripts/__pycache__/
+GameplayScripts/API/__pycache__/
+GameplayScripts/commons/__pycache__/
+*.ini

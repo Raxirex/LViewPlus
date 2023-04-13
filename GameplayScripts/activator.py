@@ -1,4 +1,4 @@
-from winstealer import *
+from LViewPlus64 import *
 from commons.targeting import *
 from time import time
 
@@ -7,14 +7,14 @@ auto_qss = True
 heal_percent = 0
 auto_heal = True
 
-winstealer_script_info = {
+LViewPlus64_script_info = {
     "script": "Activator",
     "author": "bckd00r",
     "description": "Activator",
 }
 
 
-def winstealer_load_cfg(cfg):
+def LViewPlus64_load_cfg(cfg):
     global auto_heal, heal_percent
     global auto_qss
     auto_qss = cfg.get_bool("Auto QSS", True)
@@ -22,13 +22,13 @@ def winstealer_load_cfg(cfg):
     auto_heal = cfg.get_bool("auto_heal", True)
 
 
-def winstealer_save_cfg(cfg):
+def LViewPlus64_save_cfg(cfg):
     global auto_heal, heal_percent
     cfg.set_float("heal_percent", heal_percent)
     cfg.set_bool("auto_heal", auto_heal)
 
 
-def winstealer_draw_settings(game, ui):
+def LViewPlus64_draw_settings(game, ui):
     global auto_heal, heal_percent
 
     ui.begin("WS+ Activator")
@@ -61,7 +61,7 @@ def Ignite(game):
             ignite.move_and_trigger(game.world_to_screen(target.pos))
 
 
-def winstealer_update(game, ui):
+def LViewPlus64_update(game, ui):
     global auto_heal, heal_percent, show_healable
 
     self = game.player
